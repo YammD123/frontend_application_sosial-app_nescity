@@ -40,19 +40,7 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-        <SidebarProvider
-        style={{
-        "--sidebar-width": "20rem",
-         "--sidebar-width-mobile": "20rem"
-        } as React.CSSProperties }
-        >
-        <AppSidebar user={auth.user} />
-        <main className="p-2">
-          <SidebarTrigger />
-          <ModeToggle />
         {children}
-        </main>
-        </SidebarProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -13,7 +13,6 @@ export default function Home() {
   if(!auth) redirect('/login')
   return(
     <>
-    <p>adad</p>
     </>
   );
 }

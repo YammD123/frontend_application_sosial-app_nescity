@@ -6,7 +6,14 @@ import { z } from "zod";
 
 const loginScema = z.object({
     email: z.string().email("email harus ada"),
-    password: z.string().min(4, "password minimal 6 karakter"),
+    password: z.string().min(4, "password minimal 4 karakter"),
+})
+
+const registerScema = z.object({
+    name: z.string().min(4, "name minimal 4 karakter"),
+    user_name: z.string().min(4, "username minimal 4 karakter"),
+    email: z.string().email("email harus ada"),
+    password: z.string().min(4, "password minimal 4 karakter"),
 })
 
 type ActionState = {
@@ -15,6 +22,8 @@ type ActionState = {
   fieldError?: {
     email?: string;
     password?: string;
+    name?: string;
+    user_name?: string;
   };
 };
 
@@ -45,9 +54,7 @@ export const loginAction = async (_prev: ActionState,formData: FormData,) : Prom
     if(res.status === 404){
         return {
             success: false,
-            fieldError: {
-                email: "email tidak ditemukan",
-            }
+            message: "user tidak ditemukan",
         }
     }
     if(res.status === 400){
@@ -71,4 +78,14 @@ export const loginAction = async (_prev: ActionState,formData: FormData,) : Prom
         success: true,
         message:"berhasil login"
     }
+}
+
+export const registerAction = async (_prev: ActionState,formData: FormData,) : Promise<ActionState> => {
+    const name = formData.get("name");
+    const user_name = formData.get("user_name");
+    const email = formData.get("email");
+    const password = formData.get("password");
+
+    const result = registerScema.safeParse({name, user_name, email, password});
+    
 }
