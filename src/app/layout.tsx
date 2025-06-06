@@ -4,6 +4,8 @@ import "./globals.css";
 import { userLoaderStatus } from "@/loaders/user-loader";
 import { SidebarProvider, SidebarTrigger } from "@/common/shadcn/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
+import { ThemeProvider } from "@/components/theme-provider";
+import { ModeToggle } from "@/components/toggle-dark";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,10 +31,16 @@ export default async function RootLayout({
   const auth = await userLoaderStatus();
   console.log(auth);
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
         <SidebarProvider
         style={{
         "--sidebar-width": "20rem",
@@ -40,11 +48,13 @@ export default async function RootLayout({
         } as React.CSSProperties }
         >
         <AppSidebar />
-        <main>
+        <main className="p-2">
           <SidebarTrigger />
+          <ModeToggle />
         {children}
         </main>
         </SidebarProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
