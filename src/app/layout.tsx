@@ -29,7 +29,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const auth = await userLoaderStatus();
-  console.log(auth);
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -47,7 +46,7 @@ export default async function RootLayout({
          "--sidebar-width-mobile": "20rem"
         } as React.CSSProperties }
         >
-        <AppSidebar />
+        <AppSidebar user={auth.user} />
         <main className="p-2">
           <SidebarTrigger />
           <ModeToggle />
