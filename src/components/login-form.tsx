@@ -5,14 +5,17 @@ import { Button } from "@/common/shadcn/button"
 import { Card, CardContent } from "@/common/shadcn/card"
 import { Input } from "@/common/shadcn/input"
 import { Label } from "@/common/shadcn/label"
-import { useActionState } from "react"
+import { useActionState, useEffect } from "react"
 import { loginAction } from "@/actions/user-action"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
 
+    const router = useRouter()
     const [state,formAction] = useActionState(loginAction,{
       message: "",
       success: false,
@@ -22,6 +25,9 @@ export function LoginForm({
       },
     })
 
+    useEffect(() => {
+        if(state.success) router.push("/content/beranda/home")
+    },[state.success])
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
@@ -43,30 +49,30 @@ export function LoginForm({
                   required
                   name="email"
                 />
-                {state.fieldError?.email && <p className="text-sm text-red-500/65">{state.fieldError.email}</p>}
+                {state.fieldError?.email && <p className="text-sm italic text-red-500/65">{state.fieldError.email}</p>}
               </div>
               <div className="grid gap-3">
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
                 </div>
                 <Input name="password" id="password" type="password" required />
-                {state.fieldError?.password && <p className="text-sm text-red-500/65">{state.fieldError.password}</p>}
+                {state.fieldError?.password && <p className="text-sm italic text-red-500/65">{state.fieldError.password}</p>}
               </div>
               <Button type="submit" className="w-full">
                 Login
               </Button>
               <div className="flex justify-center items-center">
                 {state.message && !state.success?
-                <p className="text-sm text-red-500/65">{state.message}</p>
+                <p className="text-sm italic text-red-500/65">{state.message}</p>
                 :
-                <p className="text-sm text-green-500/65">{state.message}</p>
+                <p className="text-sm italic text-green-500/65">{state.message}</p>
                 }
               </div>
               <div className="text-center text-sm">
                 Don&apos;t have an account?{" "}
-                <a href="#" className="underline underline-offset-4">
-                  Sign up
-                </a>
+                <Link href="/register" className="underline underline-offset-4">
+                  Register
+                </Link>
               </div>
             </div>
           </form>

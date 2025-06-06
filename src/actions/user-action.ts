@@ -2,6 +2,7 @@
 
 import { BASE_URL } from "@/lib/base-url";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { z } from "zod";
 
 const loginScema = z.object({
@@ -87,5 +88,36 @@ export const registerAction = async (_prev: ActionState,formData: FormData,) : P
     const password = formData.get("password");
 
     const result = registerScema.safeParse({name, user_name, email, password});
-    
+
+    if(!result.success){
+        const zodError = result.error.flatten().fieldErrors;
+        return {
+            success: false,
+            fieldError: {
+                name: zodError.name?.[0],
+                user_name: zodError.user_name?.[0],
+                email: zodError.email?.[0],
+                password: zodError.password?.[0],
+            }
+        }
+    }
+
+    const res = await fetch(`${BASE_URL}/user/register`,{
+        method:"POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({name, user_name, email, password})
+    })
+    const data = await res.json()
+    if(res.status === 409){
+        return {
+            success: false,
+            message:"email sudah terdaftar",
+        }
+    }
+    return {
+        success: true,
+        message: "berhasil register"
+    }
 }
