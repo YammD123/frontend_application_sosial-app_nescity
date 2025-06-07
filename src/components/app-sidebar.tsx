@@ -54,11 +54,11 @@ const data = {
       items: [
         {
           title: "Home",
-          url: "#",
+          url: "/content/beranda/home",
         },
         {
           title: "Profile",
-          url: "#",
+          url: "/content/beranda/profile",
         },
       ],
     },
