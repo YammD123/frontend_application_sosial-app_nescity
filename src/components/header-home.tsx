@@ -8,6 +8,8 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useRef } from "react";
 import { CldUploadWidget } from "next-cloudinary";
+import { Images } from "lucide-react";
+import { Button } from "@/common/shadcn/button";
 
 interface HomeProps {
   profile: {
@@ -19,10 +21,17 @@ interface HomeProps {
 
 export default function Headerhome({ profile }: HomeProps) {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const handleInput = () => {
     if (textAreaRef.current) {
       textAreaRef.current.style.height = "auto";
       textAreaRef.current.style.height = textAreaRef.current.scrollHeight + "px";
+    }
+  }
+
+  const handleClick =() => {
+    if (inputRef.current) {
+      inputRef.current.click();
     }
   }
 
@@ -62,17 +71,24 @@ export default function Headerhome({ profile }: HomeProps) {
                     <h1>{profile.name}</h1>
                   </div>
                   <div>
-                    <form action="">
+                    <form encType="" action="">
                       <textarea
                         className="w-full resize-none focus:outline-none p-2 rounded-lg"
-                        name=""
+                        name="caption"
                         ref={textAreaRef}
                         onInput={handleInput}
                         id=""
                         placeholder="Tulis sesuatu disini..."
-
                       ></textarea>
-                      
+                      <Separator />
+                      <div className="flex justify-end p-4">
+                        <div onClick={handleClick}>
+                          <Images 
+                          size={25}
+                          />
+                        </div>
+                          <input ref={inputRef} type="file" multiple className="hidden" />
+                      </div>
                     </form>
                   </div>
                 </DialogContent>
