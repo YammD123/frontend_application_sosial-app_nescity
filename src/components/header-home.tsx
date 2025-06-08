@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/common/shad
 import { Separator } from "@/common/shadcn/separator";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useActionState, useRef } from "react";
+import React, { useActionState, useEffect, useRef } from "react";
 import { Images, Trash2 } from "lucide-react";
 import { Button } from "@/common/shadcn/button";
 import { postActionCreate } from "@/actions/post-action";
@@ -23,6 +23,15 @@ export default function Headerhome({ profile }: HomeProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [preview, setPreview] = React.useState<string[]>([]);
   const [state,formData] = useActionState(postActionCreate,{message:"",success:false});
+  const [open, setOpen] = React.useState(false);
+
+
+  useEffect(() => {
+    if (state?.success) {
+      setOpen(false)
+      setPreview([])
+    }
+  }, [state?.success]);
 
   //mengatur tinggi textarea agar tetap sesuai dengan isi
   const handleInput = () => {
@@ -77,8 +86,8 @@ export default function Headerhome({ profile }: HomeProps) {
               />
             </Link>
             <div className="w-full items-start">
-              <Dialog>
-                <DialogTrigger className="text-sm w-full bg-gray-300 dark:bg-zinc-800 p-2 rounded-3xl flex items-start  opacity-65">
+              <Dialog open={open} onOpenChange={setOpen}>
+                <DialogTrigger onClick={()=>setOpen(true)} className="text-sm w-full bg-gray-300 dark:bg-zinc-800 p-2 rounded-3xl flex items-start  opacity-65">
                   Apa yang anda pikirkan ,
                   {profile.name.toUpperCase()[0] + profile.name.slice(1)}?
                 </DialogTrigger>
@@ -143,7 +152,7 @@ export default function Headerhome({ profile }: HomeProps) {
                           onChange={handleChange}
                         />
                       </div>
-                        <Button variant={"outline"} type="submit">Posting</Button>
+                        <Button onClick={()=>setOpen(false)}  variant={"outline"} type="submit">Posting</Button>
                     </form>
                   </div>
                 </DialogContent>

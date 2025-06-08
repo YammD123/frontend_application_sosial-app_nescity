@@ -17,14 +17,14 @@ export const postActionCreate = async(prev:any,formData:FormData)=>{
         form.append("media",media)
     }
 
-    const res = await fetch(`${BASE_URL}/post`,{
-        method:"POST",
-        headers: {
-            cookie: `token=${cookie}`
-        },
-        body: form
-    })
-    const data = await res.json()
+    // const res = await fetch(`${BASE_URL}/post`,{
+    //     method:"POST",
+    //     headers: {
+    //         cookie: `token=${cookie}`
+    //     },
+    //     body: form
+    // })
+    // const data = await res.json()
     return {
         message: "berhasil membuat post",
         success: true
