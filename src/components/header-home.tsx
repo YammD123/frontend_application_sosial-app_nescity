@@ -9,6 +9,7 @@ import React, { useActionState, useEffect, useRef } from "react";
 import { Images, Trash2 } from "lucide-react";
 import { Button } from "@/common/shadcn/button";
 import { postActionCreate } from "@/actions/post-action";
+import { toast } from "sonner";
 
 interface HomeProps {
   profile: {
@@ -30,6 +31,7 @@ export default function Headerhome({ profile }: HomeProps) {
     if (state?.success) {
       setOpen(false)
       setPreview([])
+      toast.success(state.message)
     }
   }, [state?.success]);
 

@@ -1,8 +1,12 @@
+"use client"
+
 import { localDate } from '@/common/helpers/local-date'
+import { Button } from '@/common/shadcn/button'
 import { Card, CardContent } from '@/common/shadcn/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/common/shadcn/tabs'
 import Image from 'next/image'
 import React from 'react'
+import { toast } from 'sonner'
 
 interface Props {
     postAll:{
@@ -27,7 +31,7 @@ export default function ContentHome({postAll}:Props) {
   return (
     <>
     {postAll.map((post)=>(
-        <Card className='w-full' key={post.id}>
+        <Card className='w-full border' key={post.id}>
             <CardContent>
                 <div className='flex flex-col'>
                     <div className='flex items-center gap-2'>

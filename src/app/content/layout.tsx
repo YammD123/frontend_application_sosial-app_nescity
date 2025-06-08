@@ -1,4 +1,5 @@
 import { SidebarProvider, SidebarTrigger } from "@/common/shadcn/sidebar";
+import { Toaster } from "@/common/shadcn/sonner";
 import { AppSidebar } from "@/components/app-sidebar";
 import { ModeToggle } from "@/components/toggle-dark";
 import { userLoaderStatus } from "@/loaders/user-loader";
@@ -16,6 +17,7 @@ export default async function Layout({
         <main className="p-2 w-full">
           <SidebarTrigger />
           <ModeToggle />
+          <Toaster />
           {children}
         </main>
       </SidebarProvider>
