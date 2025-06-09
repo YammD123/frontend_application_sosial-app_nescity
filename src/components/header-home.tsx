@@ -34,7 +34,6 @@ export default function Headerhome({ profile }: HomeProps) {
       toast.success(state.message)
     }
   }, [state?.success]);
-
   //mengatur tinggi textarea agar tetap sesuai dengan isi
   const handleInput = () => {
     if (textAreaRef.current) {
@@ -72,6 +71,7 @@ export default function Headerhome({ profile }: HomeProps) {
       inputRef.current!.value = "";
     }
   };
+
 
   return (
     <>

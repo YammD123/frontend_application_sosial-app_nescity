@@ -47,6 +47,9 @@ export default function ContentHome({postAll}:Props) {
                             <p className='text-xs text-muted-foreground'>{localDate(post.created_at)}</p>
                         </div>
                     </div>
+                    <div className='flex my-3'>
+                        <p className='text-sm'>{post.caption}</p>
+                    </div>
                     <div>
                         {post.media.length > 0 && (
                             <Tabs defaultValue={post.media[0]?.id}>

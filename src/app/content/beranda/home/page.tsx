@@ -11,7 +11,7 @@ export default async function page() {
   return (
     <div className='text-center  flex items-center justify-center'>
       <div className=' flex-col gap-3 flex justify-center items-center w-full lg:w-3/4 2xl:w-1/2'>
-      <section className='w-full sticky top-0'>
+      <section className='w-full mb-6 sticky top-0'>
         <Headerhome 
           profile={profileMe}
       />
