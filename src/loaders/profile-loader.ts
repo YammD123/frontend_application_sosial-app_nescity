@@ -3,7 +3,7 @@
 import { BASE_URL } from "@/lib/base-url"
 import { cookies } from "next/headers"
 
-export const profileLoader = async()=>{
+export const profileLoaderMe = async()=>{
     const cookieStore = await cookies()
     const cookie = cookieStore.get("token")?.value
     if(!cookie){

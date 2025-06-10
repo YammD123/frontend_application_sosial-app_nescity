@@ -2,11 +2,11 @@ import ContentHome from '@/components/content-home'
 import Headerhome from '@/components/header-home'
 import NotFoundPost from '@/components/not-found-post'
 import { postLoaderAll } from '@/loaders/post-loader'
-import { profileLoader } from '@/loaders/profile-loader'
+import { profileLoaderMe } from '@/loaders/profile-loader'
 import React from 'react'
 
 export default async function page() {
-  const profileMe = await profileLoader()
+  const profileMe = await profileLoaderMe()
   const postAll = await postLoaderAll()
   return (
     <div className='text-center  flex items-center justify-center'>
