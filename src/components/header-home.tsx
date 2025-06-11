@@ -10,6 +10,7 @@ import { Images, Trash2 } from "lucide-react";
 import { Button } from "@/common/shadcn/button";
 import { postActionCreate } from "@/actions/post-action";
 import { toast } from "sonner";
+import { Avatar, AvatarFallback, AvatarImage } from "@/common/shadcn/avatar";
 
 interface HomeProps {
   profile: {
@@ -78,14 +79,11 @@ export default function Headerhome({ profile }: HomeProps) {
       <Card className="w-full bg-zinc-100 border-0 dark:bg-zinc-900">
         <CardContent>
           <div className="flex gap-2 items-center">
-            <Link href={"/content/beranda/profile"}>
-              <Image
-                src={profile.avatar_image}
-                alt={profile.name}
-                width={40}
-                height={40}
-                className="rounded-full"
-              />
+            <Link  href={"/content/beranda/profile"}>
+            <Avatar className="w-12 h-12">
+              <AvatarImage alt={profile.name} className="object-cover" src={profile.avatar_image} />
+              <AvatarFallback>{profile.name.toLowerCase()}</AvatarFallback>
+            </Avatar>
             </Link>
             <div className="w-full items-start">
               <Dialog open={open} onOpenChange={setOpen}>
