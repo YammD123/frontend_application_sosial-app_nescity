@@ -1,11 +1,13 @@
 "use client"
 
+import { profileActionUpdateCover } from '@/actions/profile-action'
 import { Avatar, AvatarFallback, AvatarImage } from '@/common/shadcn/avatar'
 import { Button } from '@/common/shadcn/button'
 import { Card, CardContent } from '@/common/shadcn/card'
 import { ImagePlus, Trash } from 'lucide-react'
 import Image from 'next/image'
-import React from 'react'
+import React, { useActionState } from 'react'
+import { toast } from 'sonner'
 
 interface Props{
     profile:{
@@ -24,6 +26,7 @@ interface Props{
 export default function HeaderProfile({profile}:Props) {
     const inputRef = React.useRef<HTMLInputElement>(null);
     const [preview, setPreview] = React.useState<string | null>(null);
+    const [state,formData] = useActionState(profileActionUpdateCover,{message:"",success:false});
 
     const handleClick = () => {
         if (inputRef.current) {
@@ -53,6 +56,12 @@ export default function HeaderProfile({profile}:Props) {
             URL.revokeObjectURL(preview)
         }
     }, [preview])
+
+    React.useEffect(()=>{
+        if (state?.success){
+            toast.success(state.message)
+        }
+    },[state?.success])
   return (
     <>
     <Card >
@@ -93,8 +102,8 @@ export default function HeaderProfile({profile}:Props) {
                     </Button>
                     )}
                     <div  className='absolute bottom-3 z-10 right-3'>
-                        <form>
-                            <input ref={inputRef} onChange={handlePreviewBannerImage} type="file" className='hidden' name='cover_image' id='cover_image'/>
+                        <form action={formData}>
+                            <input ref={inputRef} onChange={handlePreviewBannerImage} type="file" className='hidden' name='banner' id='cover_image'/>
                             {preview && (
                                 <Button type='submit' variant="outline">Save Banner</Button>
                             )}
