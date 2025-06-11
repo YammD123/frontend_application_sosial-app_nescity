@@ -4,7 +4,7 @@ import { profileActionUpdateCover, profileActionUpdateProfile } from '@/actions/
 import { Avatar, AvatarFallback, AvatarImage } from '@/common/shadcn/avatar'
 import { Button } from '@/common/shadcn/button'
 import { Card, CardContent } from '@/common/shadcn/card'
-import { ImagePlus, Trash } from 'lucide-react'
+import { ImagePlus, Save, Trash } from 'lucide-react'
 import Image from 'next/image'
 import React, { useActionState } from 'react'
 import { toast } from 'sonner'
@@ -73,9 +73,7 @@ export default function HeaderProfile({profile}:Props) {
         setPreview(null)
     }
 
-    const handleRemoveAvatarImage = () => {
-        setPreview2(null)
-    }
+
 
     React.useEffect(() => {
         if (preview){
@@ -94,9 +92,15 @@ export default function HeaderProfile({profile}:Props) {
             toast.success(state.message)
         }
     },[state?.success])
+
+    React.useEffect(()=>{
+        if (state2?.success){
+            toast.success(state2.message)
+        }
+    },[state2?.success])
   return (
     <>
-    <Card >
+    <Card className='bg-zinc-100 dark:bg-zinc-900' >
         <CardContent className='flex flex-col justify-center items-center gap-4'>
             <div>
                 <div className='relative'>
@@ -157,9 +161,14 @@ export default function HeaderProfile({profile}:Props) {
                         <Button onClick={handleClick2} className='absolute top-3 hover:bg-green-300 right-3 z-10 bg-green-300' >
                             <ImagePlus size={25}/>
                         </Button>
-                        <form className='mt-2'>
-                            <input onChange={handlePreviewAvatarImage} ref={inputRef2} type="file" className='hidden' />
-                            <Button type='submit'>Save</Button>
+                        <form action={formData2} className='mt-2'>
+                            <input name='avatar' onChange={handlePreviewAvatarImage} ref={inputRef2} type="file" className='hidden' />
+                            {preview2 && (
+                                <Button type='submit' variant="outline">
+                                    <Save size={25}/>
+                                    Simpan
+                                </Button>
+                            )}
                         </form>
                         </div>
                         <div className='w-fit mt-3'>

@@ -1,4 +1,5 @@
 import HeaderProfile from "@/components/header-profile"
+import InfoProfile from "@/components/info-profile";
 import { profileLoaderMe } from "@/loaders/profile-loader"
 
 export default async function page() {
@@ -12,10 +13,12 @@ export default async function page() {
       />
       </div>
       <div className="flex gap-3 flex-row justify-between items-center w-full lg:w-3/4 2xl:w-8/12">
-        <div className="bg-amber-400 w-8/12 ">
-          ssa
+        <div className="w-8/12 ">
+        <InfoProfile 
+        profile={profileMe}
+        />
         </div>
-        <div className="bg-amber-600 w-full">
+        <div className="w-full">
           assa
         </div>
       </div>

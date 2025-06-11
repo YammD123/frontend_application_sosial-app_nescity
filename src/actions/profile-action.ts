@@ -32,4 +32,19 @@ export const profileActionUpdateProfile = async (prev: any,formData: FormData) =
   if (!cookie) {
     return null;
   }
+
+  const form = new FormData();
+  form.append("avatar", formData.get("avatar")!);
+  const res = await fetch(`${BASE_URL}/profile/avatar`, {
+    method: "PATCH",
+    headers: {
+      cookie: `token=${cookie}`,
+    },
+    body: form,
+  });
+  const data = await res.json();
+  return {
+    message: "berhasil mengganti profile",
+    success: true,
+  };
 }
