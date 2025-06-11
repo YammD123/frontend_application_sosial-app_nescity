@@ -1,6 +1,6 @@
 "use client"
 
-import { profileActionUpdateCover } from '@/actions/profile-action'
+import { profileActionUpdateCover, profileActionUpdateProfile } from '@/actions/profile-action'
 import { Avatar, AvatarFallback, AvatarImage } from '@/common/shadcn/avatar'
 import { Button } from '@/common/shadcn/button'
 import { Card, CardContent } from '@/common/shadcn/card'
@@ -25,12 +25,21 @@ interface Props{
 
 export default function HeaderProfile({profile}:Props) {
     const inputRef = React.useRef<HTMLInputElement>(null);
+    const inputRef2 = React.useRef<HTMLInputElement>(null);
     const [preview, setPreview] = React.useState<string | null>(null);
+    const [preview2, setPreview2] = React.useState<string | null>(null);
     const [state,formData] = useActionState(profileActionUpdateCover,{message:"",success:false});
+    const [state2,formData2] = useActionState(profileActionUpdateProfile,{message:"",success:false});
 
     const handleClick = () => {
         if (inputRef.current) {
           inputRef.current.click();
+        }
+    }
+
+    const handleClick2 = () => {
+        if (inputRef2.current) {
+          inputRef2.current.click();
         }
     }
 
@@ -47,8 +56,25 @@ export default function HeaderProfile({profile}:Props) {
         }
     }
 
+    const handlePreviewAvatarImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0]
+        if (file){
+            const loadRenderImage = new FileReader()
+            loadRenderImage.onload = ()=>{
+                setPreview2(loadRenderImage.result as string)
+            }
+            loadRenderImage.readAsDataURL(file)
+        }else{
+            setPreview2(null)
+        }
+    }
+
     const handleRemoveBannerImage = () => {
         setPreview(null)
+    }
+
+    const handleRemoveAvatarImage = () => {
+        setPreview2(null)
     }
 
     React.useEffect(() => {
@@ -56,6 +82,12 @@ export default function HeaderProfile({profile}:Props) {
             URL.revokeObjectURL(preview)
         }
     }, [preview])
+
+    React.useEffect(() => {
+        if (preview2){
+            URL.revokeObjectURL(preview2)
+        }
+    }, [preview2])
 
     React.useEffect(()=>{
         if (state?.success){
@@ -110,10 +142,26 @@ export default function HeaderProfile({profile}:Props) {
                         </form>
                     </div>
                     <div className='absolute w-full flex bottom-1 left-3'>
-                        <Avatar className='w-40 h-40' >
-                            <AvatarImage className='object-cover' src={profile.avatar_image} />
-                            <AvatarFallback>SS</AvatarFallback>
-                        </Avatar>
+                        <div className='relative'>
+                            {preview2 ? (
+                                <Avatar className='w-40 h-40' >
+                                    <AvatarImage className='object-cover z-0' src={preview2} />
+                                    <AvatarFallback>SS</AvatarFallback>
+                                </Avatar>
+                            ):(
+                                <Avatar className='w-40 h-40' >
+                                    <AvatarImage className='object-cover z-0' src={profile.avatar_image} />
+                                    <AvatarFallback>SS</AvatarFallback>
+                                </Avatar>
+                            )}
+                        <Button onClick={handleClick2} className='absolute top-3 hover:bg-green-300 right-3 z-10 bg-green-300' >
+                            <ImagePlus size={25}/>
+                        </Button>
+                        <form className='mt-2'>
+                            <input onChange={handlePreviewAvatarImage} ref={inputRef2} type="file" className='hidden' />
+                            <Button type='submit'>Save</Button>
+                        </form>
+                        </div>
                         <div className='w-fit mt-3'>
                             <h1 className='text-2xl font-bold'>{profile.name}</h1>
                             <p className='text-muted-foreground'>{profile.user_name}</p>
