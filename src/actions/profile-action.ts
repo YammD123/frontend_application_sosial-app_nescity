@@ -48,3 +48,7 @@ export const profileActionUpdateProfile = async (prev: any,formData: FormData) =
     success: true,
   };
 }
+
+export const profileActionUpdate = async (prev: any,formData: FormData) => {
+
+}
