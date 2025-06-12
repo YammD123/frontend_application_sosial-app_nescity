@@ -1,6 +1,6 @@
 "use client";
 
-import { CalendarDays, Edit, MapPin, MapPinned, Map } from "lucide-react";
+import { CalendarDays, Edit, MapPin, MapPinned, Map, Info, MapPinCheckInsideIcon, Notebook, BookOpenText, Cake } from "lucide-react";
 import { Button } from "@/common/shadcn/button";
 import { Calendar } from "@/common/shadcn/calendar";
 import { Card } from "@/common/shadcn/card";
@@ -19,7 +19,8 @@ import {
   SelectValue,
 } from "@/common/shadcn/select";
 import { Separator } from "@/common/shadcn/separator";
-import React, { useRef } from "react";
+import React, { useActionState, useRef } from "react";
+import { profileActionUpdate } from "@/actions/profile-action";
 
 interface Props {
   profile: {
@@ -32,6 +33,8 @@ interface Props {
     alamat: string;
     bio: string;
     website: string;
+    tanggal_lahir: string;
+    gender: string;
   };
 }
 
@@ -50,7 +53,17 @@ export default function InfoProfile({ profile }: Props) {
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [date, setDate] = React.useState<Date | undefined>(new Date());
+  const [open, setOpen] = React.useState(false);
+  const [state, formData] = useActionState(profileActionUpdate, {
+    message: "",
+    success: false,
+  });
+  console.log(state?.message);
 
+  /*************  ✨ Windsurf Command ⭐  *************/
+  /**
+   * Mengatur tinggi textarea agar tetap sesuai dengan isi
+/*******  02930720-5ae0-495f-980b-aa056154d84c  *******/
   const handleInput = () => {
     if (textAreaRef.current) {
       textAreaRef.current.style.height = "auto";
@@ -91,12 +104,19 @@ export default function InfoProfile({ profile }: Props) {
     }
   }, [selectedKota]);
 
+  React.useEffect(() => {
+    if (profile?.tanggal_lahir) {
+      setDate(new Date(profile.tanggal_lahir));
+    }
+  }, [profile?.tanggal_lahir]);
+
   return (
     <Card className="w-full px-1 py-3">
       <div className="flex justify-between px-3">
         <h1 className="text-xl font-semibold">Info</h1>
-        <Dialog>
-          <DialogTrigger>
+
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogTrigger onClick={() => setOpen(true)}>
             <Edit size={20} />
           </DialogTrigger>
           <DialogContent className="w-full">
@@ -201,24 +221,57 @@ export default function InfoProfile({ profile }: Props) {
             </div>
 
             {/* Textarea dan Submit */}
-            <form className="mt-4 flex flex-col gap-2">
+            <form action={formData} className="mt-4 flex flex-col gap-2">
               <input
                 value={`${selectedProvinsi?.name}, ${selectedKota?.name}, ${selectedKecamatan?.name}`}
                 readOnly
                 type="text"
                 className="hidden"
+                name="alamat"
               />
               <textarea
                 ref={textAreaRef}
                 onInput={handleInput}
+                defaultValue={profile?.bio}
+                name="bio"
                 placeholder="Tulis bio mu..."
                 className="w-full border focus:outline-none p-2 rounded-lg"
               ></textarea>
-              <input type="text" value={date?.toDateString() ?? ""} readOnly />
-              <Input type="text" name="" placeholder="gender" readOnly />
-              <Input type="text" name="" placeholder="pendidikan" readOnly />
-              <Input type="text" name="" placeholder="pekerjaan" readOnly />
-              <Button className="mt-2 w-full" type="submit">
+              <input
+                type="text"
+                value={date?.toISOString().split("T")[0] ?? ""}
+                name="tanggal_lahir"
+                readOnly
+              />
+              <Input
+                defaultValue={profile?.gender}
+                type="text"
+                name="gender"
+                placeholder="gender"
+              />
+              <Input
+                defaultValue={profile?.pendidikan}
+                type="text"
+                name="pendidikan"
+                placeholder="pendidikan"
+              />
+              <Input
+                defaultValue={profile?.pekerjaan}
+                type="text"
+                name="pekerjaan"
+                placeholder="pekerjaan"
+              />
+              <Input
+                defaultValue={profile?.website}
+                type="text"
+                name="website"
+                placeholder="website"
+              />
+              <Button
+                onClick={() => setOpen(false)}
+                className="mt-2 w-full"
+                type="submit"
+              >
                 Simpan
               </Button>
             </form>
@@ -226,6 +279,44 @@ export default function InfoProfile({ profile }: Props) {
         </Dialog>
       </div>
       <Separator className="mt-2" />
+
+      <div className="flex flex-col items-start gap-4 w-fit px-2">
+        <div>
+          <div className="flex items-center gap-2">
+            <Info size={20}/>
+            Bio
+          </div>
+          <p className="text-muted-foreground">{profile?.bio ?? "-"}</p>
+        </div>
+        <div>
+          <div className="flex items-center gap-2">
+            <MapPinCheckInsideIcon size={20}/>
+            Alamat
+          </div>
+          <p className="text-muted-foreground text-sm">{profile?.alamat.toLowerCase() ?? "-"}</p>
+        </div>
+        <div>
+          <div className="flex items-center gap-2">
+            <Notebook size={20}/>
+            Pekerjaan
+          </div>
+          <p className="text-muted-foreground text-sm">{profile?.pekerjaan ?? "-"}</p>
+        </div>
+        <div>
+          <div className="flex items-center gap-2">
+            <BookOpenText size={20}/>
+            Pendidikan
+          </div>
+          <p className="text-muted-foreground text-sm">{profile?.pendidikan ?? "-"}</p>
+        </div>
+        <div>
+          <div className="flex items-center gap-2">
+            <Cake size={20}/>
+            Ulang Tahun
+          </div>
+          <p className="text-muted-foreground text-sm">{profile?.tanggal_lahir ?? "-"}</p>
+        </div>
+      </div>
     </Card>
   );
 }

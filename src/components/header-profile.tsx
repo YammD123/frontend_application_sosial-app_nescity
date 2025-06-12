@@ -1,6 +1,6 @@
 "use client"
 
-import { profileActionUpdateCover, profileActionUpdateProfile } from '@/actions/profile-action'
+import { profileActionUpdateAvatar, profileActionUpdateCover} from '@/actions/profile-action'
 import { Avatar, AvatarFallback, AvatarImage } from '@/common/shadcn/avatar'
 import { Button } from '@/common/shadcn/button'
 import { Card, CardContent } from '@/common/shadcn/card'
@@ -29,7 +29,7 @@ export default function HeaderProfile({profile}:Props) {
     const [preview, setPreview] = React.useState<string | null>(null);
     const [preview2, setPreview2] = React.useState<string | null>(null);
     const [state,formData] = useActionState(profileActionUpdateCover,{message:"",success:false});
-    const [state2,formData2] = useActionState(profileActionUpdateProfile,{message:"",success:false});
+    const [state2,formData2] = useActionState(profileActionUpdateAvatar,{message:"",success:false});
 
     const handleClick = () => {
         if (inputRef.current) {

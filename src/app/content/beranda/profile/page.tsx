@@ -4,7 +4,6 @@ import { profileLoaderMe } from "@/loaders/profile-loader"
 
 export default async function page() {
   const profileMe = await profileLoaderMe()
-  console.log(profileMe);
   return (
     <div className='text-center gap-20 flex-col  flex items-center justify-center'>
       <div className="w-full">

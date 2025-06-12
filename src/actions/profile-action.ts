@@ -26,7 +26,7 @@ export const profileActionUpdateCover = async (prev: any,formData: FormData) => 
   };
 };
 
-export const profileActionUpdateProfile = async (prev: any,formData: FormData) => {
+export const profileActionUpdateAvatar = async (prev: any,formData: FormData) => {
   const cookieStore = await cookies();
   const cookie = cookieStore.get("token")?.value;
   if (!cookie) {
@@ -50,5 +50,31 @@ export const profileActionUpdateProfile = async (prev: any,formData: FormData) =
 }
 
 export const profileActionUpdate = async (prev: any,formData: FormData) => {
+  const cookieStore = await cookies();
+  const cookie = cookieStore.get("token")?.value;
+  if (!cookie) {
+    return null;
+  }
 
+  const tanggal_lahir = formData.get('tanggal_lahir')
+  const alamat = formData.get('alamat')
+  const bio = formData.get('bio')
+  const website = formData.get('website')
+  const pendidikan = formData.get('pendidikan')
+  const pekerjaan = formData.get('pekerjaan')
+  const gender = formData.get('gender')
+
+  const res = await fetch(`${BASE_URL}/profile`, {
+    method: "PATCH",
+    headers: {
+      cookie: `token=${cookie}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ tanggal_lahir, alamat, bio, website, pendidikan, pekerjaan, gender }),
+  })
+  const data = await res.json()
+  return {
+    message: "berhasil mengganti profile",
+    success: true,
+  }
 }
