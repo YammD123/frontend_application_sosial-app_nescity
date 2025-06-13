@@ -15,7 +15,7 @@ export default async function page() {
       profile={profileMe}
       />
       </div>
-      <div className="flex gap-3 flex-row justify-between  w-full lg:w-3/4 2xl:w-8/12">
+      <div className="flex gap-3 flex-col items-center sm:items-start sm:flex-row justify-between  w-full lg:w-3/4 2xl:w-8/12">
         <div className="w-8/12 ">
         <InfoProfile 
         profile={profileMe}

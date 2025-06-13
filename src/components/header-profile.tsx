@@ -171,10 +171,15 @@ export default function HeaderProfile({profile}:Props) {
                             )}
                         </form>
                         </div>
+                        <div className='flex flex-col ml-1'>
+
                         <div className='w-fit mt-3'>
                             <h1 className='text-2xl font-bold'>{profile.name}</h1>
                             <p className='text-muted-foreground'>{profile.user_name}</p>
-                            <p>{profile.bio || "Belum ada bio"}</p>
+                        </div>
+                        <div className='w-fit mt-3'>
+                            <p className='text-muted-foreground'>{profile.bio}</p>
+                        </div>
                         </div>
                     </div>
                 </div>

@@ -310,7 +310,11 @@ export default function InfoProfile({ profile }: Props) {
             Alamat
           </div>
           <p className="text-muted-foreground text-sm">
-            {profile?.alamat.toLowerCase() ?? "-"}
+            {profile?.alamat?(
+              profile?.alamat.toLowerCase()
+            ):(
+              "-"
+            )}
           </p>
         </div>
         <div>

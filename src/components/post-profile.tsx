@@ -2,7 +2,9 @@
 
 import { localDate } from "@/common/helpers/local-date";
 import { Card, CardContent } from "@/common/shadcn/card";
+import { DropdownMenu, DropdownMenuTrigger } from "@/common/shadcn/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/common/shadcn/tabs";
+import { Ellipsis, ListCollapse } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
@@ -40,11 +42,20 @@ export default function PostProfile({ postProfile }: Props) {
                   alt="avatar"
                   className="rounded-full "
                 />
-                <div className="flex items-start flex-col">
-                  <h3 className="text-lg">{post.user.profile.name}</h3>
-                  <p className="text-xs text-muted-foreground">
-                    {localDate(post.created_at)}
-                  </p>
+                <div className="flex items-start justify-between w-full">
+                    <div className="flex flex-col items-center ">
+                      <h3 className="text-lg">{post.user.profile.name}</h3>
+                      <p className="text-xs text-muted-foreground">
+                        {localDate(post.created_at)}
+                      </p>
+                    </div>
+                    <div className="flex items-center">
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Ellipsis className="w-4 h-4" />
+                            </DropdownMenuTrigger>
+                        </DropdownMenu>
+                    </div>
                 </div>
               </div>
               <div className="flex my-3">

@@ -19,8 +19,9 @@ export default async function Layout({
       <SidebarProvider>
         <AppSidebar user={auth.user} />
         <main className="p-2 w-full">
+          <nav className="flex sticky top-0 z-50 items-center justify-between">        
           <SidebarTrigger />
-          <ModeToggle />
+          </nav>
           <Toaster />
           {children}
         </main>
