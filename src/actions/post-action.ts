@@ -12,10 +12,12 @@ export const postActionCreate = async(prev:any,formData:FormData)=>{
 
     const form = new FormData()
     form.append("caption",formData.get("caption")!)
-    const media = formData.get("media")
-    if(media && (media as File).size > 0){
-        form.append("media",media)
-    }
+    const media = formData.getAll("media") as File[]
+    media.forEach((gambar)=>{
+        if(gambar && gambar.size > 0){
+            form.append("media",gambar)
+        }
+    })
 
     const res = await fetch(`${BASE_URL}/post`,{
         method:"POST",

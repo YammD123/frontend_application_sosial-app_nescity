@@ -6,11 +6,12 @@ import { Separator } from "@/common/shadcn/separator";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useActionState, useEffect, useRef } from "react";
-import { Images, Trash2 } from "lucide-react";
+import { Images, Loader2, Trash2 } from "lucide-react";
 import { Button } from "@/common/shadcn/button";
 import { postActionCreate } from "@/actions/post-action";
 import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/common/shadcn/avatar";
+import { useRouter } from "next/navigation";
 
 interface HomeProps {
   profile: {
@@ -24,8 +25,9 @@ export default function Headerhome({ profile }: HomeProps) {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [preview, setPreview] = React.useState<string[]>([]);
-  const [state,formData] = useActionState(postActionCreate,{message:"",success:false});
+  const [state,formData,isPending] = useActionState(postActionCreate,{message:"",success:false});
   const [open, setOpen] = React.useState(false);
+  const router = useRouter();
 
 
   useEffect(() => {
@@ -73,6 +75,12 @@ export default function Headerhome({ profile }: HomeProps) {
     }
   };
 
+  React.useEffect(()=>{
+    if(state?.success){
+      toast.success(state.message)
+      router.refresh()
+    }
+  },[state?.success])
 
   return (
     <>
@@ -152,7 +160,12 @@ export default function Headerhome({ profile }: HomeProps) {
                           onChange={handleChange}
                         />
                       </div>
-                        <Button onClick={()=>setOpen(false)}  variant={"outline"} type="submit">Posting</Button>
+                        <Button onClick={()=>setOpen(false)} disabled={isPending}   variant={"outline"} type="submit">
+                          {isPending && (
+                            <Loader2 className="mr-2  animate-spin" />
+                          )}
+                          Posting
+                        </Button>
                     </form>
                   </div>
                 </DialogContent>

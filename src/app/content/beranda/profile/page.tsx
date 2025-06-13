@@ -21,9 +21,11 @@ export default async function page() {
         profile={profileMe}
         />
         </div>
-        <div className="w-full">
+        <div className="w-full flex flex-col gap-2">
           {postMe && postMe.length > 0 ?(
-            <PostProfile />
+            <PostProfile 
+            postProfile={postMe}
+            />
           ):(
             <NotFoundPost />
           )}

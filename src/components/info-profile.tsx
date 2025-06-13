@@ -11,6 +11,7 @@ import {
   Notebook,
   BookOpenText,
   Cake,
+  Loader2,
 } from "lucide-react";
 import { Button } from "@/common/shadcn/button";
 import { Calendar } from "@/common/shadcn/calendar";
@@ -34,6 +35,7 @@ import React, { useActionState, useRef } from "react";
 import { profileActionUpdate } from "@/actions/profile-action";
 import { stat } from "fs";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface Props {
   profile: {
@@ -58,20 +60,20 @@ export default function InfoProfile({ profile }: Props) {
   const [kota, setKota] = React.useState<Wilayah[]>([]);
   const [kecamatan, setKecamatan] = React.useState<Wilayah[]>([]);
 
-  const [selectedProvinsi, setSelectedProvinsi] =
-    React.useState<Wilayah | null>(null);
+  const [selectedProvinsi, setSelectedProvinsi] = React.useState<Wilayah | null>(null);
   const [selectedKota, setSelectedKota] = React.useState<Wilayah | null>(null);
-  const [selectedKecamatan, setSelectedKecamatan] =
-    React.useState<Wilayah | null>(null);
+  const [selectedKecamatan, setSelectedKecamatan] = React.useState<Wilayah | null>(null);
 
+  const formRef = React.useRef<HTMLFormElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const [formKey, setFormKey] = React.useState(0);
   const [date, setDate] = React.useState<Date | undefined>(new Date());
   const [open, setOpen] = React.useState(false);
-  const [state, formData] = useActionState(profileActionUpdate, {
+  const [state, formData,isPending] = useActionState(profileActionUpdate, {
     message: "",
     success: false,
   });
-
+  const router = useRouter();
 
   // Mengatur tinggi textarea agar tetap sesuai dengan isi
 
@@ -82,6 +84,7 @@ export default function InfoProfile({ profile }: Props) {
         textAreaRef.current.scrollHeight + "px";
     }
   };
+
 
   React.useEffect(() => {
     fetch("https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json")
@@ -125,6 +128,9 @@ export default function InfoProfile({ profile }: Props) {
     if(state?.message){
       setOpen(false)
       toast.success(state.message)
+      formRef.current?.reset()
+      setFormKey(prev => prev + 1)
+      router.refresh()
     }
   },[state?.message])
   return (
@@ -237,7 +243,7 @@ export default function InfoProfile({ profile }: Props) {
             </div>
 
             {/* Textarea dan Submit */}
-            <form action={formData} className="mt-4 flex flex-col gap-2">
+            <form key={formKey} ref={formRef} action={formData} className="mt-4 flex flex-col gap-2">
               <input
                 value={
                   selectedProvinsi && selectedKota && selectedKecamatan
@@ -290,7 +296,9 @@ export default function InfoProfile({ profile }: Props) {
               <Button
                 className="mt-2 w-full"
                 type="submit"
+                disabled={isPending}
               >
+                {isPending && <Loader2 className="mr-2 animate-spin" />}
                 Simpan
               </Button>
             </form>
