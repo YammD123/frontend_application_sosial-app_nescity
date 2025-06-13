@@ -32,6 +32,8 @@ import {
 import { Separator } from "@/common/shadcn/separator";
 import React, { useActionState, useRef } from "react";
 import { profileActionUpdate } from "@/actions/profile-action";
+import { stat } from "fs";
+import { toast } from "sonner";
 
 interface Props {
   profile: {
@@ -69,12 +71,10 @@ export default function InfoProfile({ profile }: Props) {
     message: "",
     success: false,
   });
-  console.log(state?.message);
 
-  /*************  ✨ Windsurf Command ⭐  *************/
-  /**
-   * Mengatur tinggi textarea agar tetap sesuai dengan isi
-/*******  02930720-5ae0-495f-980b-aa056154d84c  *******/
+
+  // Mengatur tinggi textarea agar tetap sesuai dengan isi
+
   const handleInput = () => {
     if (textAreaRef.current) {
       textAreaRef.current.style.height = "auto";
@@ -121,6 +121,12 @@ export default function InfoProfile({ profile }: Props) {
     }
   }, [profile?.tanggal_lahir]);
 
+  React.useEffect(() => {
+    if(state?.message){
+      setOpen(false)
+      toast.success(state.message)
+    }
+  },[state?.message])
   return (
     <Card className="w-full px-1 py-3">
       <div className="flex justify-between px-3">
@@ -134,7 +140,6 @@ export default function InfoProfile({ profile }: Props) {
             <DialogTitle>Update Profile Info</DialogTitle>
             <Separator className="my-2" />
 
-            {/* Select Provinsi */}
             <div className="flex items-center gap-2">
               <MapPin size={16} />
               <Select
@@ -283,7 +288,6 @@ export default function InfoProfile({ profile }: Props) {
                 placeholder="website"
               />
               <Button
-                onClick={() => setOpen(false)}
                 className="mt-2 w-full"
                 type="submit"
               >
@@ -295,7 +299,7 @@ export default function InfoProfile({ profile }: Props) {
       </div>
       <Separator className="mt-2" />
 
-      <div className="flex flex-col items-start gap-4 w-fit px-2">
+      <div className="flex flex-col items-start gap-4 ">
         <div>
           <div className="flex items-center gap-2">
             <Info size={20} />

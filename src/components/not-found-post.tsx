@@ -5,7 +5,7 @@ import React from "react";
 export default function NotFoundPost() {
   return (
     <>
-    <Card className="w-full mt-6">
+    <Card className="w-full">
       <CardHeader>
         <CardTitle className="text-center text-lg font-semibold text-gray-700">
           Belum Ada Postingan
