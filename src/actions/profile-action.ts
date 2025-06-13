@@ -49,7 +49,7 @@ export const profileActionUpdateAvatar = async (prev: any,formData: FormData) =>
   };
 }
 
-export const profileActionUpdate = async (prev: any,formData: FormData) => {
+export const profileActionUpdate = async (state:{message:string,success:boolean}|null,formData: FormData) => {
   const cookieStore = await cookies();
   const cookie = cookieStore.get("token")?.value;
   if (!cookie) {

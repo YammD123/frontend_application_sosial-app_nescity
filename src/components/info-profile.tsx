@@ -64,9 +64,7 @@ export default function InfoProfile({ profile }: Props) {
   const [selectedKota, setSelectedKota] = React.useState<Wilayah | null>(null);
   const [selectedKecamatan, setSelectedKecamatan] = React.useState<Wilayah | null>(null);
 
-  const formRef = React.useRef<HTMLFormElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const [formKey, setFormKey] = React.useState(0);
   const [date, setDate] = React.useState<Date | undefined>(new Date());
   const [open, setOpen] = React.useState(false);
   const [state, formData,isPending] = useActionState(profileActionUpdate, {
@@ -75,7 +73,7 @@ export default function InfoProfile({ profile }: Props) {
   });
   const router = useRouter();
 
-  // Mengatur tinggi textarea agar tetap sesuai dengan isi
+
 
   const handleInput = () => {
     if (textAreaRef.current) {
@@ -128,11 +126,9 @@ export default function InfoProfile({ profile }: Props) {
     if(state?.message){
       setOpen(false)
       toast.success(state.message)
-      formRef.current?.reset()
-      setFormKey(prev => prev + 1)
       router.refresh()
     }
-  },[state?.message])
+  },[state])
   return (
     <Card className="w-full px-1 py-3">
       <div className="flex justify-between px-3">
@@ -243,7 +239,7 @@ export default function InfoProfile({ profile }: Props) {
             </div>
 
             {/* Textarea dan Submit */}
-            <form key={formKey} ref={formRef} action={formData} className="mt-4 flex flex-col gap-2">
+            <form   action={formData} className="mt-4 flex flex-col gap-2">
               <input
                 value={
                   selectedProvinsi && selectedKota && selectedKecamatan
@@ -308,13 +304,6 @@ export default function InfoProfile({ profile }: Props) {
       <Separator className="mt-2" />
 
       <div className="flex flex-col items-start gap-4 ">
-        <div>
-          <div className="flex items-center gap-2">
-            <Info size={20} />
-            Bio
-          </div>
-          <p className="text-muted-foreground">{profile?.bio ?? "-"}</p>
-        </div>
         <div>
           <div className="flex items-center gap-2">
             <MapPinCheckInsideIcon size={20} />
