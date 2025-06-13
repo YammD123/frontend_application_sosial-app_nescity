@@ -1,6 +1,17 @@
 "use client";
 
-import { CalendarDays, Edit, MapPin, MapPinned, Map, Info, MapPinCheckInsideIcon, Notebook, BookOpenText, Cake } from "lucide-react";
+import {
+  CalendarDays,
+  Edit,
+  MapPin,
+  MapPinned,
+  Map,
+  Info,
+  MapPinCheckInsideIcon,
+  Notebook,
+  BookOpenText,
+  Cake,
+} from "lucide-react";
 import { Button } from "@/common/shadcn/button";
 import { Calendar } from "@/common/shadcn/calendar";
 import { Card } from "@/common/shadcn/card";
@@ -223,7 +234,11 @@ export default function InfoProfile({ profile }: Props) {
             {/* Textarea dan Submit */}
             <form action={formData} className="mt-4 flex flex-col gap-2">
               <input
-                value={`${selectedProvinsi?.name}, ${selectedKota?.name}, ${selectedKecamatan?.name}`}
+                value={
+                  selectedProvinsi && selectedKota && selectedKecamatan
+                    ? `${selectedProvinsi.name}, ${selectedKota.name}, ${selectedKecamatan.name}`
+                    : profile?.alamat ?? ""
+                }
                 readOnly
                 type="text"
                 className="hidden"
@@ -283,38 +298,46 @@ export default function InfoProfile({ profile }: Props) {
       <div className="flex flex-col items-start gap-4 w-fit px-2">
         <div>
           <div className="flex items-center gap-2">
-            <Info size={20}/>
+            <Info size={20} />
             Bio
           </div>
           <p className="text-muted-foreground">{profile?.bio ?? "-"}</p>
         </div>
         <div>
           <div className="flex items-center gap-2">
-            <MapPinCheckInsideIcon size={20}/>
+            <MapPinCheckInsideIcon size={20} />
             Alamat
           </div>
-          <p className="text-muted-foreground text-sm">{profile?.alamat.toLowerCase() ?? "-"}</p>
+          <p className="text-muted-foreground text-sm">
+            {profile?.alamat.toLowerCase() ?? "-"}
+          </p>
         </div>
         <div>
           <div className="flex items-center gap-2">
-            <Notebook size={20}/>
+            <Notebook size={20} />
             Pekerjaan
           </div>
-          <p className="text-muted-foreground text-sm">{profile?.pekerjaan ?? "-"}</p>
+          <p className="text-muted-foreground text-sm">
+            {profile?.pekerjaan ?? "-"}
+          </p>
         </div>
         <div>
           <div className="flex items-center gap-2">
-            <BookOpenText size={20}/>
+            <BookOpenText size={20} />
             Pendidikan
           </div>
-          <p className="text-muted-foreground text-sm">{profile?.pendidikan ?? "-"}</p>
+          <p className="text-muted-foreground text-sm">
+            {profile?.pendidikan ?? "-"}
+          </p>
         </div>
         <div>
           <div className="flex items-center gap-2">
-            <Cake size={20}/>
+            <Cake size={20} />
             Ulang Tahun
           </div>
-          <p className="text-muted-foreground text-sm">{profile?.tanggal_lahir ?? "-"}</p>
+          <p className="text-muted-foreground text-sm">
+            {profile?.tanggal_lahir ?? "-"}
+          </p>
         </div>
       </div>
     </Card>

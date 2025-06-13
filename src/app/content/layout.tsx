@@ -3,6 +3,7 @@ import { Toaster } from "@/common/shadcn/sonner";
 import { AppSidebar } from "@/components/app-sidebar";
 import { ModeToggle } from "@/components/toggle-dark";
 import { userLoaderStatus } from "@/loaders/user-loader";
+import { redirect } from "next/navigation";
 
 export default async function Layout({
   children,
@@ -10,6 +11,9 @@ export default async function Layout({
   children: React.ReactNode;
 }) {
   const auth = await userLoaderStatus();
+  if (!auth?.user) {
+    redirect("/login");
+  }
   return (
     <>
       <SidebarProvider>
