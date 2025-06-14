@@ -13,6 +13,8 @@ import {
   PieChart,
   Settings2,
   SquareTerminal,
+  UserRound,
+  Users,
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
@@ -63,20 +65,19 @@ const data = {
       ],
     },
     {
-      title: "Models",
-      url: "#",
-      icon: Bot,
+      title: "Kait",
+      icon: Users,
       items: [
         {
-          title: "Genesis",
+          title: "Explore",
+          url: "/content/kait/explore",
+        },
+        {
+          title: "Friends",
           url: "#",
         },
         {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
+          title: "FriendsList",
           url: "#",
         },
       ],

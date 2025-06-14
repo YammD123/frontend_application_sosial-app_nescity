@@ -24,3 +24,11 @@ export const postLoaderMe = async () => {
     const data = await res.json();
     return data.data
 }
+
+export const postLoaderDetail = async (id: string) => {
+    const res = await fetch(`${BASE_URL}/post/${id}`, {
+        cache: "no-store",
+    });
+    const data = await res.json();
+    return data.data;
+}
