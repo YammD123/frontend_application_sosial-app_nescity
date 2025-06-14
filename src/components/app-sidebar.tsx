@@ -73,7 +73,7 @@ const data = {
           url: "/content/kait/explore",
         },
         {
-          title: "Friends",
+          title: "Friend-Requests",
           url: "#",
         },
         {
