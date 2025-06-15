@@ -1,4 +1,4 @@
-import { UserNotFound } from '@/components/not-found-user'
+import { UserNotFound } from '@/components/not-found/not-found-user'
 import UserAllExplore from '@/components/user-all-explore'
 import { userLoaderAllList } from '@/loaders/user-loader'
 import React from 'react'
