@@ -8,7 +8,7 @@ export function UserNotFound() {
       <UserX className="w-12 h-12 mb-3 text-gray-800 dark:text-gray-400" />
       <h2 className="text-xl font-semibold">Tidak Ada Pengguna</h2>
       <p className="text-sm text-center max-w-sm mt-1">
-        Kami tidak menemukan pengguna yang tersedia untuk diikuti saat ini.
+        Kami tidak menemukan pengguna yang tersedia untuk diikuti/mengikuti saat ini.
         Coba lagi nanti atau eksplorasi halaman lain.
       </p>
     </div>

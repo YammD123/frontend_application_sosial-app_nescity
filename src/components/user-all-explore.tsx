@@ -38,7 +38,7 @@ export default function UserAllExplore({userLoaderAll}: Props) {
 
   return (
     <>
-    <div className='grid grid-cols-2 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3  xl:grid-cols-7'>
+    <div className='grid gap-2 grid-cols-2 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3  xl:grid-cols-7'>
         {userLoaderAll && userLoaderAll.length > 0 && userLoaderAll.map((user)=>(
             <Card key={user.id} className='w-full p-0 border'>
                 <CardContent className='p-0'>
@@ -55,14 +55,14 @@ export default function UserAllExplore({userLoaderAll}: Props) {
                             </div> */}
                         </div>
                         <div className='w-full px-2 my-3'>
-                            <h2 className='text-2xl my-1'>{user.profile.name}</h2>
+                            <h2 className='text-2xl my-1 text-ellipsis line-clamp-1 overflow-hidden max-w-full'>{user.profile.name}</h2>
                             <form action={formAction}>
                             <input name='receiver_id' defaultValue={user.id} className='hidden' type="text" />
                              <Button type='submit' className='w-full bg-blue-400 hover:bg-blue-400'>
                                 {isPending && (
                                     <Loader2 className="mr-2  animate-spin" />
                                 )}
-                                Follow
+                                Ikuti
                              </Button>
                             </form>
                         </div>
