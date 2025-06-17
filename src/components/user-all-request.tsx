@@ -23,10 +23,12 @@ export default function UserAllRequest({ userLoaderAllReq }: Props) {
   const [state, formAction, isPending] = useActionState(followActionAccept, {
     message: "",
     success: false,
+    receiver_id: "",
   });
   const [state2, formAction2, isPending2] = useActionState(followActionReject, {
     message: "",
     success: false,
+    receiver_id: "",
   });
 
 
@@ -86,7 +88,7 @@ export default function UserAllRequest({ userLoaderAllReq }: Props) {
                         type="submit"
                         className="w-full bg-blue-400 hover:bg-blue-400"
                       >
-                        {isPending && (
+                        {isPending && state?.receiver_id === user.id && (
                           <Loader2 className="mr-2  animate-spin" />
                         )}
                         Ikuti Balik
@@ -103,7 +105,7 @@ export default function UserAllRequest({ userLoaderAllReq }: Props) {
                         type="submit"
                         className="w-full bg-gray-400 hover:bg-gray-400"
                       >
-                        {isPending2 && (
+                        {isPending2 && state2?.receiver_id === user.id && (
                           <Loader2 className="mr-2  animate-spin" />
                         )}
                         Tolak

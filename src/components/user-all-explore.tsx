@@ -20,7 +20,7 @@ interface Props {
 }
 
 export default function UserAllExplore({userLoaderAll}: Props) {
-    const [state,formAction,isPending] = useActionState(followActionSend,{message:"",success:false})
+    const [state,formAction,isPending] = useActionState(followActionSend,{message:"",success:false,receiver_id:""})
     const [isMounted, setIsMounted] = React.useState(false);
     const router = useRouter();
     React.useEffect(() => {
@@ -58,8 +58,8 @@ export default function UserAllExplore({userLoaderAll}: Props) {
                             <h2 className='text-2xl my-1 text-ellipsis line-clamp-1 overflow-hidden max-w-full'>{user.profile.name}</h2>
                             <form action={formAction}>
                             <input name='receiver_id' defaultValue={user.id} className='hidden' type="text" />
-                             <Button type='submit' className='w-full bg-blue-400 hover:bg-blue-400'>
-                                {isPending && (
+                             <Button disabled={isPending}  type='submit' className='w-full bg-blue-400 hover:bg-blue-400'>
+                                {isPending && state?.receiver_id === user.id && (
                                     <Loader2 className="mr-2  animate-spin" />
                                 )}
                                 Ikuti

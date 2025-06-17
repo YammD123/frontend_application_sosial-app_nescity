@@ -23,7 +23,8 @@ export const followActionSend = async (prev:any,formData:FormData) => {
     const data = await res.json()
     return {
         message: "berhasil mengirim permintaan",
-        success: true
+        success: true,
+        receiver_id
     }
 }
 
@@ -47,8 +48,9 @@ export const followActionAccept = async (prev:any,formData:FormData) => {
     })
     const data = await res.json()
     return {
-        message: "permintaan permintaan berhasil diterima",
-        success: true
+        message: data.message,
+        success: true,
+        receiver_id
     }
 }
 
@@ -73,8 +75,9 @@ export const followActionReject = async (prev:any,formData:FormData) => {
     })
     const data = await res.json()
     return {
-        message: "permintaan ditolak",
-        success: true
+        message: data.message,
+        success: true,
+        receiver_id
     }
 }
 

@@ -77,8 +77,8 @@ const data = {
           url: "/content/kait/requests",
         },
         {
-          title: "FriendsList",
-          url: "#",
+          title: "Followers",
+          url: "/user/follower",
         },
       ],
     },
