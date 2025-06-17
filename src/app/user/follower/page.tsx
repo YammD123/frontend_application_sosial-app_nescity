@@ -1,7 +1,14 @@
 import React from 'react'
 
-export default function page() {
+interface Props {
+   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export default async function page({searchParams}: Props) {
+  const {page} = await searchParams
   return (
-    <div>page</div>
+    <div>
+      <p>ini page user follower {page}</p>
+    </div>
   )
 }
