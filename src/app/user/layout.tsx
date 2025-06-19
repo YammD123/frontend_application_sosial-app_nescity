@@ -1,6 +1,7 @@
 import { SidebarProvider, SidebarTrigger } from "@/common/shadcn/sidebar";
 import { Toaster } from "@/common/shadcn/sonner";
 import { UserSidebar } from "@/components/user-sidebar";
+import { followLoaderGetFollowers } from "@/loaders/follow-loader";
 
 export default async function Layout({
   children,
@@ -10,7 +11,7 @@ export default async function Layout({
   return (
     <>
       <SidebarProvider>
-        <UserSidebar/>
+        <UserSidebar />
         <main className="p-2 w-full">
           <nav className="flex sticky top-0 z-50 items-center justify-between">        
           <SidebarTrigger />

@@ -5,10 +5,10 @@ interface Props {
 }
 
 export default async function page({searchParams}: Props) {
-  const {page} = await searchParams
+  const {search} = await searchParams
   return (
     <div>
-      <p>ini page user follower {page}</p>
+      <p>ini follower {search}</p>
     </div>
   )
 }
