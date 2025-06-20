@@ -13,7 +13,7 @@ import {
 import { Input } from "@/common/shadcn/input";
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import UserListSidebar from "./user-list-sidebar";
+import UserListSidebar from "../users/user-list-sidebar";
 import { followLoaderGetFollowers } from "@/loaders/follow-loader";
 
 export function UserSidebar() {
@@ -43,7 +43,12 @@ export function UserSidebar() {
     };
     getData();
   }, []);
-  const filteredData = followers?.data.filter((item) =>item.follower.profile.name?.toLowerCase().includes(search.trim().toLowerCase())) || [];
+  const filteredData =
+    followers?.data.filter((item) =>
+      item.follower.profile.name
+        ?.toLowerCase()
+        .includes(search.trim().toLowerCase())
+    ) || [];
   return (
     <Sidebar>
       <SidebarHeader>

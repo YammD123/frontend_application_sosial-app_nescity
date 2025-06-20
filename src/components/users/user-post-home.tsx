@@ -25,7 +25,7 @@ interface Props {
     }[]
 }
 
-export default function ContentHome({postAll}:Props) {
+export default function UserPostHome({postAll}:Props) {
   return (
     <>
     {postAll.map((post)=>(

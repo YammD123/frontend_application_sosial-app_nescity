@@ -26,9 +26,33 @@ export const postLoaderMe = async () => {
 }
 
 export const postLoaderDetail = async (id: string) => {
+    const cookieStore = await cookies();
+    const cookie = cookieStore.get("token")?.value;
+    if (!cookie) {
+        return null;
+    }
     const res = await fetch(`${BASE_URL}/post/${id}`, {
         cache: "no-store",
+        headers: {
+            cookie: `token=${cookie}`,
+        }
     });
     const data = await res.json();
     return data.data;
+}
+
+export const postLoaderDetailByUserId = async (id: string) => {
+    const cookieStore = await cookies();
+    const cookie = cookieStore.get("token")?.value;
+    if (!cookie) {
+        return null;
+    }
+    const res = await fetch(`${BASE_URL}/post/user/${id}`, {
+        headers: {
+            cookie: `token=${cookie}`,
+        },
+        cache: "no-store",
+    });
+    const data = await res.json();
+    return data.data
 }

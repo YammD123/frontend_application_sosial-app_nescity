@@ -1,6 +1,6 @@
 import { SidebarProvider, SidebarTrigger } from "@/common/shadcn/sidebar";
 import { Toaster } from "@/common/shadcn/sonner";
-import { AppSidebar } from "@/components/app-sidebar";
+import { NavAppSidebar } from "@/components/navigations/nav-app-sidebar";
 import { ModeToggle } from "@/components/toggle-dark";
 import { userLoaderStatus } from "@/loaders/user-loader";
 import { redirect } from "next/navigation";
@@ -17,10 +17,10 @@ export default async function Layout({
   return (
     <>
       <SidebarProvider>
-        <AppSidebar user={auth.user} />
+        <NavAppSidebar user={auth.user} />
         <main className="p-2 w-full">
-          <nav className="flex sticky top-0 z-50 items-center justify-between">        
-          <SidebarTrigger />
+          <nav className="flex sticky top-0 z-50 items-center justify-between">
+            <SidebarTrigger />
           </nav>
           <Toaster />
           {children}

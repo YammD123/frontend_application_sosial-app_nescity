@@ -23,7 +23,7 @@ interface Props{
     }
 }
 
-export default function HeaderProfile({profile}:Props) {
+export default function UserBannerProfile({profile}:Props) {
     const inputRef = React.useRef<HTMLInputElement>(null);
     const inputRef2 = React.useRef<HTMLInputElement>(null);
     const [preview, setPreview] = React.useState<string | null>(null);

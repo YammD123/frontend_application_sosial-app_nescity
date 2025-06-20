@@ -1,9 +1,9 @@
-import ContentHome from "@/components/content-home";
-import Headerhome from "@/components/header-home";
-import NotFoundPost from "@/components/not-found/not-found-post";
+import Headerhome from "@/components/headers/header-home";
+import NotFoundPost from "@/components/not-founds/not-found-post";
 import { postLoaderAll } from "@/loaders/post-loader";
 import { profileLoaderMe } from "@/loaders/profile-loader";
 import React from "react";
+import UserPostHome from "@/components/users/user-post-home";
 
 export default async function page() {
   const profileMe = await profileLoaderMe();
@@ -15,7 +15,7 @@ export default async function page() {
           <Headerhome profile={profileMe} />
         </section>
         {postAll && postAll.length > 0 ? (
-          <ContentHome postAll={postAll} />
+          <UserPostHome postAll={postAll} />
         ) : (
           <NotFoundPost />
         )}

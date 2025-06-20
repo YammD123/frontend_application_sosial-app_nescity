@@ -17,9 +17,9 @@ import {
   Users,
 } from "lucide-react";
 
-import { NavMain } from "@/components/nav-main";
-import { NavProjects } from "@/components/nav-projects";
-import { NavUser } from "@/components/nav-user";
+import { NavMain } from "@/components/navigations/nav-main";
+import { NavProjects } from "@/components/navigations/nav-projects";
+import { NavUser } from "@/components/navigations/nav-user";
 import { TeamSwitcher } from "@/components/team-switcher";
 import {
   Sidebar,
@@ -148,7 +148,10 @@ const data = {
   ],
 };
 
-export function AppSidebar({ user,...props}:{user: { email: string}} & React.ComponentProps<typeof Sidebar>) {
+export function NavAppSidebar({
+  user,
+  ...props
+}: { user: { email: string } } & React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -159,9 +162,7 @@ export function AppSidebar({ user,...props}:{user: { email: string}} & React.Com
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser 
-        user={user}
-         />
+        <NavUser user={user} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

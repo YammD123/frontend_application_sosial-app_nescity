@@ -25,7 +25,7 @@ export default function UserListSidebar({followers}: Props) {
   return (
     <div className='flex flex-col gap-2'>
         {followers?.data?.map((follower) => (
-            <div onClick={()=> router.push(`/user/follower?id=${follower.follower.id}`)} className={`flex ${search === follower.follower.id ? "dark:bg-neutral-950 bg-zinc-200" : "dark:bg-zinc-800 bg-zinc-50"} p-2 items-center rounded-3xl border bg-zinc-950/25 gap-2`} key={follower.id}>
+            <div onClick={()=> router.push(`/user/follower?id=${follower.follower.id}`)} className={`flex ${search === follower.follower.id ? "dark:bg-zinc-800 bg-zinc-200" : ""} p-2 items-center rounded-xl   gap-2`} key={follower.id}>
                 <Avatar className='w-10 h-10'>
                     <AvatarImage src={follower.follower.profile.avatar_image} alt={follower.follower.profile.name} />
                     <AvatarFallback>{follower.follower.profile.name}</AvatarFallback>

@@ -55,7 +55,7 @@ interface Props {
 
 type Wilayah = { id: string; name: string };
 
-export default function InfoProfile({ profile }: Props) {
+export default function UserInfoProfile({ profile }: Props) {
   const [provinsi, setProvinsi] = React.useState<Wilayah[]>([]);
   const [kota, setKota] = React.useState<Wilayah[]>([]);
   const [kecamatan, setKecamatan] = React.useState<Wilayah[]>([]);

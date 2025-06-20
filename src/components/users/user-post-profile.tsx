@@ -27,7 +27,7 @@ interface Props {
   }[];
 }
 
-export default function PostProfile({ postProfile }: Props) {
+export default function UserPostProfile({ postProfile }: Props) {
   return (
     <>
       {postProfile.map((post) => (
