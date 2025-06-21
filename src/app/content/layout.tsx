@@ -19,11 +19,11 @@ export default async function Layout({
       <SidebarProvider>
         <NavAppSidebar user={auth.user} />
         <main className="p-2 w-full">
-          <nav className="flex sticky top-0 z-50 items-center justify-between">
-            <SidebarTrigger />
-          </nav>
           <Toaster />
           {children}
+          <nav className="flex sticky bottom-0 z-50 items-center justify-between">
+            <SidebarTrigger />
+          </nav>
         </main>
       </SidebarProvider>
     </>
