@@ -171,7 +171,7 @@ export default function UserPostProfile({ postProfile, auth }: Props) {
               )}
 
               {/* Action Bar */}
-              <div className="flex px-20 justify-between mt-4">
+              <div className="flex px-15  justify-between mt-4">
                 <LikePost
                   like={post.like}
                   user_id={auth.user.id}

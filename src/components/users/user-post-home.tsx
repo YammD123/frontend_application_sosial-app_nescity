@@ -149,7 +149,7 @@ export default function UserPostHome({ postAll,auth }: Props) {
                 )}
               </div>
             </div>
-            <div className="flex  px-20 justify-between">
+            <div className="flex  px-15 mt-4 justify-between">
               <LikePost
               like={post.like}
               user_id={auth.user.id}

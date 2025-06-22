@@ -42,6 +42,10 @@ interface Props {
 }
 
 export default function UserPostFollower({ postProfile, auth }: Props) {
+  const [expandedMap, setExpandedMap] = React.useState<{
+    [postId: string]: boolean;
+  }>({});
+
   return (
     <>
       {postProfile.map((post) => (
@@ -65,8 +69,28 @@ export default function UserPostFollower({ postProfile, auth }: Props) {
                   </div>
                 </div>
               </div>
-              <div className="flex my-3">
-                <p className="text-sm">{post.caption}</p>
+              {/* Caption */}
+              <div className="my-3">
+                <div
+                  className={`text-sm whitespace-pre-wrap break-words break-all text-left ${
+                    expandedMap[post.id] ? "" : "line-clamp-3"
+                  }`}
+                >
+                  {post.caption}
+                </div>
+                {post.caption.length > 150 && (
+                  <button
+                    onClick={() =>
+                      setExpandedMap((prev) => ({
+                        ...prev,
+                        [post.id]: !prev[post.id],
+                      }))
+                    }
+                    className="text-blue-500 text-left flex text-xs mt-1"
+                  >
+                    {expandedMap[post.id] ? "Tutup" : "Baca selengkapnya"}
+                  </button>
+                )}
               </div>
               <div>
                 {post.media.length > 0 && (
@@ -127,7 +151,7 @@ export default function UserPostFollower({ postProfile, auth }: Props) {
                 )}
               </div>
             </div>
-            <div className="flex  px-20 justify-between">
+            <div className="flex mt-4 px-15 justify-between">
               <LikePost
                 like={post.like}
                 user_id={auth.user.id}

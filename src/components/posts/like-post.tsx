@@ -72,7 +72,7 @@ export default function LikePost({ like, user_id, post_id }: Props) {
     <div className="flex items-center gap-2 ">
         <ThumbsUp
           onClick={likeAction}
-          className={`w-7 h-7 transition-all duration-200 ${
+          className={`w-5 h-5 transition-all duration-200 ${
             isLiked
               ? "text-blue-500 fill-blue-500 scale-110"
               : "text-muted-foreground"
