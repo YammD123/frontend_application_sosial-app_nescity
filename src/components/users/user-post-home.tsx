@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/common/shadcn/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/common/shadcn/tabs";
 import Image from "next/image";
 import React from "react";
+import LikePost from "../posts/like-post";
 
 interface Props {
   postAll: {
@@ -22,10 +23,20 @@ interface Props {
         avatar_image: string;
       };
     };
+    like:{
+      id:string
+      user_id:string
+      post_id:string
+    }[];
   }[];
+  auth:{
+    user:{
+      id:string
+    }
+  }
 }
 
-export default function UserPostHome({ postAll }: Props) {
+export default function UserPostHome({ postAll,auth }: Props) {
   return (
     <>
       {postAll.map((post) => (
@@ -108,6 +119,14 @@ export default function UserPostHome({ postAll }: Props) {
                   </Tabs>
                 )}
               </div>
+            </div>
+            <div className="flex  px-20 justify-between">
+              <LikePost
+              like={post.like}
+              user_id={auth.user.id}
+              />
+              <p>as</p>
+              <p>as</p>
             </div>
           </CardContent>
         </Card>

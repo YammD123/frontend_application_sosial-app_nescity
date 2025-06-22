@@ -31,7 +31,6 @@ import { ModeToggle } from "../toggle-dark";
 export function NavUser({ user }: { user: { email: string } }) {
   {
     const { isMobile } = useSidebar();
-    console.log(user);
     return (
       <SidebarMenu>
         <SidebarMenuItem>
