@@ -2,11 +2,15 @@
 
 import { localDate } from "@/common/helpers/local-date";
 import { Card, CardContent } from "@/common/shadcn/card";
-import { DropdownMenu, DropdownMenuTrigger } from "@/common/shadcn/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+} from "@/common/shadcn/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/common/shadcn/tabs";
 import { Ellipsis, ListCollapse } from "lucide-react";
 import Image from "next/image";
 import React from "react";
+import LikePost from "../posts/like-post";
 
 interface Props {
   postProfile: {
@@ -24,10 +28,20 @@ interface Props {
         avatar_image: string;
       };
     };
+    like: {
+      id: string;
+      user_id: string;
+      post_id: string;
+    }[];
   }[];
+  auth: {
+    user: {
+      id: string;
+    };
+  };
 }
 
-export default function UserPostFollower({ postProfile }: Props) {
+export default function UserPostFollower({ postProfile, auth }: Props) {
   return (
     <>
       {postProfile.map((post) => (
@@ -36,19 +50,19 @@ export default function UserPostFollower({ postProfile }: Props) {
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
                 <Image
-                  src={post.user?.profile?.avatar_image??""}
+                  src={post.user?.profile?.avatar_image ?? ""}
                   width={40}
                   height={40}
                   alt="avatar"
                   className="rounded-full "
                 />
                 <div className="flex items-start justify-between w-full">
-                    <div className="flex flex-col items-center ">
-                      <h3 className="text-lg">{post.user?.profile?.name}</h3>
-                      <p className="text-xs text-muted-foreground">
-                        {localDate(post.created_at)}
-                      </p>
-                    </div>
+                  <div className="flex flex-col items-center ">
+                    <h3 className="text-lg">{post.user?.profile?.name}</h3>
+                    <p className="text-xs text-muted-foreground">
+                      {localDate(post.created_at)}
+                    </p>
+                  </div>
                 </div>
               </div>
               <div className="flex my-3">
@@ -112,6 +126,15 @@ export default function UserPostFollower({ postProfile }: Props) {
                   </Tabs>
                 )}
               </div>
+            </div>
+            <div className="flex  px-20 justify-between">
+              <LikePost
+                like={post.like}
+                user_id={auth.user.id}
+                post_id={post.id}
+              />
+              <p>as</p>
+              <p>as</p>
             </div>
           </CardContent>
         </Card>

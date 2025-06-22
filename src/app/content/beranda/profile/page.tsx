@@ -5,10 +5,12 @@ import { profileLoaderMe } from "@/loaders/profile-loader";
 import UserBannerProfile from "@/components/users/user-banner-profile";
 import UserInfoProfile from "@/components/users/user-info-profile";
 import UserPostProfile from "@/components/users/user-post-profile";
+import { userLoaderStatus } from "@/loaders/user-loader";
 
 export default async function page() {
   const profileMe = await profileLoaderMe();
   const postMe = await postLoaderMe();
+  const auth = await userLoaderStatus();
   return (
     <div className="text-center gap-20 flex-col  flex items-center justify-center">
       <div className="w-full">
@@ -20,7 +22,7 @@ export default async function page() {
         </div>
         <div className="w-full flex flex-col gap-2">
           {postMe && postMe.length > 0 ? (
-            <UserPostProfile postProfile={postMe} />
+            <UserPostProfile postProfile={postMe} auth={auth} />
           ) : (
             <NotFoundPost />
           )}

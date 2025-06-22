@@ -9,7 +9,7 @@ import UserInfoProfile from "@/components/users/user-info-follower";
 import UserPostProfile from "@/components/users/user-post-follower";
 import { postLoaderDetailByUserId, postLoaderMe } from "@/loaders/post-loader";
 import { profileLoaderMe } from "@/loaders/profile-loader";
-import { userLoaderFollowerById } from "@/loaders/user-loader";
+import { userLoaderFollowerById, userLoaderStatus } from "@/loaders/user-loader";
 import React from "react";
 import UserBannerFollower from "@/components/users/user-banner-follower";
 import UserInfoFollower from "@/components/users/user-info-follower";
@@ -23,6 +23,8 @@ export default async function page({ searchParams }: Props) {
   const { id } = await searchParams;
   const userLoaderFollower = await userLoaderFollowerById(id as string);
   const postLoaderDetailUserId = await postLoaderDetailByUserId(id as string);
+  const auth = await userLoaderStatus();
+
   return (
     <div className="text-center gap-20 flex-col  flex items-center justify-center">
       <div className="w-full">
@@ -35,16 +37,19 @@ export default async function page({ searchParams }: Props) {
       <div className="flex gap-3 flex-col items-center sm:items-start sm:flex-row justify-between  w-full lg:w-3/4 2xl:w-8/12">
         <div className="w-8/12 ">
           {!userLoaderFollower || !userLoaderFollower.profile ? (
-            <UserNotFound />
+            ""
           ) : (
             <UserInfoFollower profile={userLoaderFollower.profile} />
           )}
         </div>
         <div className="w-full flex flex-col gap-2">
-          {postLoaderDetailUserId && postLoaderDetailUserId.length > 0 ? (
-            <UserPostFollower postProfile={postLoaderDetailUserId} />
-          ) : (
+          {!postLoaderDetailUserId && !userLoaderFollower ? (
             <NotFoundPost />
+          ) : (
+            <UserPostFollower 
+            postProfile={postLoaderDetailUserId} 
+            auth={auth}
+            />
           )}
         </div>
       </div>

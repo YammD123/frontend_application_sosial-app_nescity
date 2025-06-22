@@ -124,6 +124,7 @@ export default function UserPostHome({ postAll,auth }: Props) {
               <LikePost
               like={post.like}
               user_id={auth.user.id}
+              post_id={post.id}
               />
               <p>as</p>
               <p>as</p>
