@@ -70,6 +70,24 @@ export default function EditPost({ caption, media, post_id }: Props) {
       throw error;
     }
   };
+  const handleSubmitRemove = async (id: string) => {
+    try {
+      const formData = new FormData();
+      formData.append("post_id", post_id);
+      formData.append("deletedMediaIds", JSON.stringify([id]));
+      const res = await fetch(`${BASE_URL}/post`, {
+        method: "PATCH",
+        credentials: "include",
+        body: formData,
+      });
+      if (res.status === 200) {
+        toast.success("Media deleted");
+          router.refresh();
+      }
+    } catch (error) {
+      throw error;
+    }
+  };
 
   const handlePreview = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -120,6 +138,27 @@ export default function EditPost({ caption, media, post_id }: Props) {
             onChange={(e) => setCaptions(e.target.value)}
             placeholder="Tulis sesuatu disini..."
           ></textarea>
+          <div className="flex w-full flex-wrap gap-2 mt-2">
+            {media.map((media) => (
+              <div key={media.id} className="w-full max-h-30 overflow-hidden rounded-lg relative">
+                <Image
+                  src={media.url}
+                  alt=""
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  className="w-full h-full object-cover"
+                />
+                <Button
+                  variant={"destructive"}
+                  className="absolute top-1 right-1 z-10"
+                  onClick={() => handleSubmitRemove(media.id)}
+                >
+                  <Trash2 size={20} />
+                </Button>
+              </div>
+            ))}
+          </div>
           {preview.length > 0 && (
             <div className="flex w-full flex-wrap gap-2 mt-2">
               {preview.map((url, index) => (
