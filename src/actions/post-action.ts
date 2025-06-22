@@ -32,3 +32,25 @@ export const postActionCreate = async(prev:any,formData:FormData)=>{
         success: true
     }
 }
+
+export const postActionDelete = async(prev:any,formData:FormData)=>{
+    const cookieStore = await cookies()
+    const cookie = cookieStore.get("token")?.value
+    if(!cookie){
+        return null
+    }
+
+    const id = formData.get("id")
+    const res = await fetch(`${BASE_URL}/post/${id}`,{
+        method:"DELETE",
+        headers: {
+            cookie: `token=${cookie}`,
+            "Content-Type": "application/json"
+        },
+    })
+    const data = await res.json()
+    return {
+        message: "berhasil menghapus post",
+        success: true
+    }
+}

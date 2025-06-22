@@ -4,6 +4,8 @@ import { localDate } from "@/common/helpers/local-date";
 import { Card, CardContent } from "@/common/shadcn/card";
 import {
   DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/common/shadcn/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/common/shadcn/tabs";
@@ -11,6 +13,8 @@ import { Ellipsis, ListCollapse } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import LikePost from "../posts/like-post";
+import EditPost from "../posts/edit-post";
+import DeletePost from "../posts/delete-post";
 
 interface Props {
   postProfile: {
@@ -68,6 +72,12 @@ export default function UserPostProfile({ postProfile, auth }: Props) {
                       <DropdownMenuTrigger asChild>
                         <Ellipsis className="w-4 h-4" />
                       </DropdownMenuTrigger>
+                      <DropdownMenuContent className="p-2">
+                        <EditPost caption={post.caption} media={post.media} />
+                        <DeletePost 
+                        post_id={post.id}
+                        />
+                      </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
                 </div>
