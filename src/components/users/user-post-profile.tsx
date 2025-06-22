@@ -5,11 +5,10 @@ import { Card, CardContent } from "@/common/shadcn/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/common/shadcn/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/common/shadcn/tabs";
-import { Ellipsis, ListCollapse } from "lucide-react";
+import { Ellipsis } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import LikePost from "../posts/like-post";
@@ -46,112 +45,141 @@ interface Props {
 }
 
 export default function UserPostProfile({ postProfile, auth }: Props) {
+  const [expandedMap, setExpandedMap] = React.useState<{
+    [postId: string]: boolean;
+  }>({});
+
   return (
     <>
       {postProfile.map((post) => (
         <Card className="w-full border" key={post.id}>
           <CardContent>
             <div className="flex flex-col">
+              {/* Header */}
               <div className="flex items-center gap-2">
                 <Image
                   src={post.user.profile.avatar_image}
                   width={40}
                   height={40}
                   alt="avatar"
-                  className="rounded-full "
+                  className="rounded-full"
                 />
                 <div className="flex items-start justify-between w-full">
-                  <div className="flex flex-col items-center ">
+                  <div className="flex flex-col items-center">
                     <h3 className="text-lg">{post.user.profile.name}</h3>
                     <p className="text-xs text-muted-foreground">
                       {localDate(post.created_at)}
                     </p>
                   </div>
-                  <div className="flex items-center">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Ellipsis className="w-4 h-4" />
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent className="p-2">
-                        <EditPost caption={post.caption} media={post.media} />
-                        <DeletePost 
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Ellipsis className="w-4 h-4 cursor-pointer" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="p-2">
+                      <EditPost
+                        caption={post.caption}
+                        media={post.media}
                         post_id={post.id}
-                        />
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </div>
+                      />
+                      <DeletePost post_id={post.id} />
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
               </div>
-              <div className="flex my-3">
-                <p className="text-sm">{post.caption}</p>
+
+              {/* Caption */}
+              <div className="my-3">
+                <div
+                  className={`text-sm whitespace-pre-wrap break-words break-all text-left ${
+                    expandedMap[post.id] ? "" : "line-clamp-3"
+                  }`}
+                >
+                  {post.caption}
+                </div>
+                {post.caption.length > 150 && (
+                  <button
+                    onClick={() =>
+                      setExpandedMap((prev) => ({
+                        ...prev,
+                        [post.id]: !prev[post.id],
+                      }))
+                    }
+                    className="text-blue-500 text-left flex text-xs mt-1"
+                  >
+                    {expandedMap[post.id] ? "Tutup" : "Baca selengkapnya"}
+                  </button>
+                )}
               </div>
-              <div>
-                {post.media.length > 0 && (
-                  <Tabs defaultValue={post.media[0]?.id}>
+
+              {/* Media */}
+              {post.media.length > 0 && (
+                <Tabs defaultValue={post.media[0]?.id}>
+                  {post.media.map((media) => (
+                    <TabsContent
+                      className="mt-3"
+                      key={media.id}
+                      value={media.id}
+                    >
+                      {media.type.startsWith("image") ? (
+                        <Image
+                          src={media.url}
+                          width={900}
+                          height={900}
+                          alt="media"
+                        />
+                      ) : (
+                        <video
+                          width={900}
+                          height={900}
+                          className="object-cover"
+                          controls
+                        >
+                          <source src={media.url} type="video/mp4" />
+                        </video>
+                      )}
+                    </TabsContent>
+                  ))}
+                  <TabsList className="gap-1 mt-2">
                     {post.media.map((media) => (
-                      <TabsContent
-                        className="mt-3"
+                      <TabsTrigger
+                        className="border-0"
                         key={media.id}
                         value={media.id}
                       >
                         {media.type.startsWith("image") ? (
                           <Image
                             src={media.url}
-                            width={900}
-                            height={900}
+                            width={60}
+                            height={60}
                             alt="media"
+                            className="object-cover w-6 h-6"
                           />
                         ) : (
                           <video
-                            width={900}
-                            height={900}
+                            width={60}
+                            height={60}
+                            muted
                             className="object-cover"
                           >
                             <source src={media.url} type="video/mp4" />
                           </video>
                         )}
-                      </TabsContent>
+                      </TabsTrigger>
                     ))}
-                    <TabsList className="gap-1 mt-2">
-                      {post.media.map((media) => (
-                        <TabsTrigger
-                          className="border-0"
-                          key={media.id}
-                          value={media.id}
-                        >
-                          {media.type.startsWith("image") ? (
-                            <Image
-                              src={media.url}
-                              width={60}
-                              height={60}
-                              alt="media"
-                              className="object-cover w-6 h-6"
-                            />
-                          ) : (
-                            <video
-                              width={60}
-                              height={60}
-                              muted
-                              className="object-cover"
-                            >
-                              <source src={media.url} type="video/mp4" />
-                            </video>
-                          )}
-                        </TabsTrigger>
-                      ))}
-                    </TabsList>
-                  </Tabs>
-                )}
+                  </TabsList>
+                </Tabs>
+              )}
+
+              {/* Action Bar */}
+              <div className="flex px-20 justify-between mt-4">
+                <LikePost
+                  like={post.like}
+                  user_id={auth.user.id}
+                  post_id={post.id}
+                />
+                <p>as</p>
+                <p>as</p>
               </div>
-            </div>
-            <div className="flex  px-20 justify-between">
-              <LikePost
-                like={post.like}
-                user_id={auth.user.id}
-                post_id={post.id}
-              />
-              <p>as</p>
-              <p>as</p>
             </div>
           </CardContent>
         </Card>

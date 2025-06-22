@@ -37,6 +37,14 @@ interface Props {
 }
 
 export default function UserPostHome({ postAll,auth }: Props) {
+    //ini akan membuat post.id menjadi object seperti ini 
+//    {
+//   "post_id_1": true,
+//   "post_id_2": false
+//    } 
+
+    const [expandedMap, setExpandedMap] = React.useState<{[postId: string]: boolean;}>({});
+  
   return (
     <>
       {postAll.map((post) => (
@@ -58,9 +66,30 @@ export default function UserPostHome({ postAll,auth }: Props) {
                   </p>
                 </div>
               </div>
-              <div className="flex my-3">
-                <p className="text-sm">{post.caption}</p>
+              {/* Caption */}
+              <div className="my-3">
+                <div
+                  className={`text-sm whitespace-pre-wrap break-words break-all text-left ${
+                    expandedMap[post.id] ? "" : "line-clamp-3"
+                  }`}
+                >
+                  {post.caption}
+                </div>
+                {post.caption.length > 150 && (
+                  <button
+                    onClick={() =>
+                      setExpandedMap((prev) => ({
+                        ...prev, //spread operator untuk mempertahankan nilai sebelumnya
+                        [post.id]: !prev[post.id], //ubah nilai tertentu atau tambahkan jika diclick
+                      }))
+                    }
+                    className="text-blue-500 text-xs items-end text-left flex mt-1"
+                  >
+                    {expandedMap[post.id] ? "Tutup" : "Baca selengkapnya"}
+                  </button>
+                )}
               </div>
+
               <div>
                 {post.media.length > 0 && (
                   <Tabs defaultValue={post.media[0]?.id}>

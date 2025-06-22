@@ -18,7 +18,8 @@ interface Props {
 
 export default function LikePost({ like, user_id, post_id }: Props) {
   const router = useRouter();
-  const isLiked = like.some((like) => like.user_id === user_id);
+  const isLiked = like.some((like) => like.user_id === user_id); // mencari apakah user_id sudah ada dalam daftar like kalo ada true kalo tidak false
+  // kalo sudah ada berarti user_id itu sama dan akan dianggap sudah like karena nilainya akan mencadi true
   console.log(user_id);
   console.log(post_id);
 
@@ -68,16 +69,15 @@ export default function LikePost({ like, user_id, post_id }: Props) {
     }
   };
   return (
-    <div className="flex items-center ">
-      <Button onClick={likeAction} variant={"ghost"}>
+    <div className="flex items-center gap-2 ">
         <ThumbsUp
-          className={`w-5 h-5 transition-all duration-200 ${
+          onClick={likeAction}
+          className={`w-7 h-7 transition-all duration-200 ${
             isLiked
               ? "text-blue-500 fill-blue-500 scale-110"
               : "text-muted-foreground"
           }`}
         />
-      </Button>
       <span>{like.length}</span>
     </div>
   );
