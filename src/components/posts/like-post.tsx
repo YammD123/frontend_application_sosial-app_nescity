@@ -20,8 +20,6 @@ export default function LikePost({ like, user_id, post_id }: Props) {
   const router = useRouter();
   const isLiked = like.some((like) => like.user_id === user_id); // mencari apakah user_id sudah ada dalam daftar like kalo ada true kalo tidak false
   // kalo sudah ada berarti user_id itu sama dan akan dianggap sudah like karena nilainya akan mencadi true
-  console.log(user_id);
-  console.log(post_id);
 
   const likeAction = async () => {
     if (!isLiked) {
