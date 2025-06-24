@@ -12,7 +12,7 @@ export default async function page() {
   const auth = await userLoaderStatus();
   return (
     <div className="text-center  flex items-center justify-center">
-      <div className=" flex-col gap-3 flex justify-center items-center w-full lg:w-3/4 2xl:w-1/2">
+      <div className=" flex-col gap-3 flex justify-center items-center w-full sm:w-3/4 md:w-2/3 lg:w-2/4 2xl:w-2/5">
         <section className="w-full mb-6 sticky top-0">
           <Headerhome profile={profileMe} />
         </section>

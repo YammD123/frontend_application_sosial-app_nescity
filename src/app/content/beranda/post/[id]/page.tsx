@@ -13,7 +13,7 @@ export default async function page({
   const auth = await userLoaderStatus();
   return (
     <div className="text-center  flex items-center justify-center">
-      <div className=" flex-col gap-3 flex justify-center items-center w-full lg:w-1/3 2xl:w-1/3">
+      <div className=" flex-col gap-3 flex justify-center items-center w-full sm:w-3/4 md:w-2/3 lg:w-2/4 2xl:w-2/5">
       <UserPostPetailPost
       postDetail={postDetail}
       auth={auth}
