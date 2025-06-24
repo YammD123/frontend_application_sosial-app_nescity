@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { Button } from "@/common/shadcn/button";
+import { localDate } from "@/common/helpers/local-date";
+import { BASE_URL } from "@/lib/base-url";
 
 type CommentUser = {
   profile: {
@@ -16,91 +18,114 @@ type Comment = {
   content: string;
   user: CommentUser;
   replies: Comment[];
+  post_id: string;
+  created_at: string;
 };
 
 type Props = {
   commentar: Comment[];
-  onSuccess: () => void; 
+  onSuccess: () => void;
 };
 
 export default function NestedCommentPost({ commentar, onSuccess }: Props) {
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
   const [replyText, setReplyText] = useState<string>("");
 
-  const handleReply = (parentId: string) => {
+  const handleReply = async (parentId: string, postId: string) => {
     if (!replyText.trim()) return;
-    console.log("Reply sent!", {
-      parent_id: parentId,
-      content: replyText,
+    await fetch(`${BASE_URL}/comment/reply`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        content: replyText,
+        parent_id: parentId,
+        post_id: postId,
+      }),
     });
-    onSuccess(); 
+    onSuccess();
     setReplyText("");
     setReplyingTo(null);
   };
 
   return (
-    <div className="space-y-4 w-full ">
+    <div className="space-y-6 mt-1">
       {commentar.map((comment) => (
-        <div key={comment.id}>
-          {/* Komentar utama */}
-          <div className="border p-4 rounded-lg flex items-start gap-3">
+        <div key={comment.id} className="flex  items-start gap-3">
+          <div className="shrink-0">
             <Image
               src={comment.user.profile.avatar_image}
               alt="avatar"
-              width={40}
-              height={40}
+              width={36}
+              height={36}
               className="rounded-full object-cover"
             />
-            <div className="w-full flex flex-col justify-start items-start">
-              <div className="font-semibold">{comment.user.profile.user_name}</div>
-              <div className="text-sm text-gray-800">{comment.content}</div>
-              <button
-                onClick={() => setReplyingTo(comment.id)}
-                className="text-blue-500 text-xs mt-2"
-              >
-                Balas
-              </button>
-
-              {replyingTo === comment.id && (
-                <div className="mt-2 w-full">
-                  <textarea
-                    className="w-full border p-2 rounded text-sm"
-                    rows={2}
-                    placeholder="Tulis balasan..."
-                    value={replyText}
-                    onChange={(e) => setReplyText(e.target.value)}
-                  />
-                  <div className="flex gap-4 mt-1">
-                    <Button
-                      onClick={() => handleReply(comment.id)}
-                      disabled={!replyText.trim()}
-                      className="bg-blue-500 text-white px-3 py-1 text-sm rounded"
-                    >
-                      Kirim
-                    </Button>
-                    <Button
-                    variant={'ghost'}
-                      onClick={() => {
-                        setReplyText("");
-                        setReplyingTo(null);
-                      }}
-                      className="text-gray-500 text-sm"
-                    >
-                      Batal
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </div>
           </div>
 
-          {/* Balasan (1 tingkat) */}
-          {comment.replies.length > 0 && (
-            <NestedCommentPost
-            commentar={comment.replies}
-            onSuccess={onSuccess}
-            />
-          )}
+          <div className="w-full max-w-3xl overflow-hidden break-words">
+            <div className="flex flex-col items-start">
+              <span className="font-semibold text-sm">
+                {comment.user.profile.user_name}
+              </span>
+              <span className="text-xs text-gray-500">
+                {localDate(comment.created_at)}
+              </span>
+            </div>
+
+            <div className="text-sm text-left text-gray-300 mt-1 break-all whitespace-pre-wrap">
+              {comment.content}
+            </div>
+
+            <button
+              onClick={() => setReplyingTo(comment.id)}
+              className="text-blue-500 text-xs mt-1 hover:underline items-start flex"
+            >
+              Balas
+            </button>
+
+            {replyingTo === comment.id && (
+              <div className="mt-2 w-full ">
+                <textarea
+                  className="border w-full p-2 rounded text-sm bg-transparent focus:outline-none"
+                  rows={2}
+                  placeholder="Tulis balasan..."
+                  value={replyText}
+                  onChange={(e) => setReplyText(e.target.value)}
+                />
+                <div className="flex gap-3 mt-2">
+                  <Button
+                    onClick={() => handleReply(comment.id, comment.post_id)}
+                    disabled={!replyText.trim()}
+                    className="bg-blue-500 text-white px-3 py-1 text-sm"
+                  >
+                    Kirim
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    onClick={() => {
+                      setReplyText("");
+                      setReplyingTo(null);
+                    }}
+                    className="text-gray-400 text-sm"
+                  >
+                    Batal
+                  </Button>
+                </div>
+              </div>
+            )}
+
+            {/* ini comment balasan bossku*/}
+            {comment.replies.length > 0 && (
+              <div className="mt-4 pl-4 ml-2 border-l-2 border-gray-600 space-y-4">
+                <NestedCommentPost
+                  commentar={comment.replies}
+                  onSuccess={onSuccess}
+                />
+              </div>
+            )}
+          </div>
         </div>
       ))}
     </div>
