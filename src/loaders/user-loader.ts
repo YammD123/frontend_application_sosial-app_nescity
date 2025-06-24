@@ -64,3 +64,19 @@ export const userLoaderFollowerById = async (id:string)=>{
     const data = await user.json()
     return data.data
 }
+
+export const userLoaderFindById = async (id:string)=>{
+    const cookieStore = await cookies()
+    const cookie = cookieStore.get("token")?.value
+    if(!cookie){
+        return null
+    }
+    const user = await fetch(`${BASE_URL}/user/${id}`,{
+        headers: {
+            cookie : `token=${cookie}`
+        },
+        cache:"no-store"
+    })
+    const data = await user.json()
+    return data.data
+}

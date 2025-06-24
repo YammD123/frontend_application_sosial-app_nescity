@@ -7,6 +7,7 @@ import Image from "next/image";
 import React from "react";
 import LikePost from "../posts/like-post";
 import TotalCommentPost from "../posts/total-comment-post";
+import { useRouter } from "next/navigation";
 
 interface Props {
   postAll: {
@@ -19,6 +20,7 @@ interface Props {
       type: string;
     }[];
     user: {
+      id: string;
       profile: {
         name: string;
         avatar_image: string;
@@ -38,6 +40,7 @@ interface Props {
 }
 
 export default function UserPostHome({ postAll,auth }: Props) {
+  const router = useRouter();
     //ini akan membuat post.id menjadi object seperti ini 
 //    {
 //   "post_id_1": true,
@@ -59,6 +62,7 @@ export default function UserPostHome({ postAll,auth }: Props) {
                   height={40}
                   alt="avatar"
                   className="rounded-full "
+                  onClick={()=>{router.push(`/content/beranda/profile/${post.user.id}`)}}
                 />
                 <div className="flex items-start flex-col">
                   <h3 className="text-lg">{post.user.profile.name}</h3>

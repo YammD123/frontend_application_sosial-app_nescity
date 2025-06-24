@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
 } from "@/common/shadcn/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/common/shadcn/tabs";
-import { Ellipsis } from "lucide-react";
+import { Ellipsis, MoveLeft } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import EditPost from "../posts/edit-post";
@@ -16,6 +16,8 @@ import LikePost from "../posts/like-post";
 import AddCommentPost from "../posts/add-comment-post";
 import TotalCommentPost from "../posts/total-comment-post";
 import CommentPost from "../posts/comment-post";
+import { Button } from "@/common/shadcn/button";
+import { useRouter } from "next/navigation";
 interface Props {
   postDetail: {
     id: string;
@@ -46,6 +48,7 @@ interface Props {
 }
 
 export default function UserPostPetailPost({ auth, postDetail }: Props) {
+  const router = useRouter();
   const [expandedMap, setExpandedMap] = React.useState<{
     [postId: string]: boolean;
   }>({});
@@ -56,6 +59,16 @@ export default function UserPostPetailPost({ auth, postDetail }: Props) {
   };
   return (
     <>
+      <div className="flex items-start w-full my-1">
+        <Button 
+        variant="ghost" 
+        onClick={() => router.back()}
+        className="flex items-center gap-2">
+          <MoveLeft size={18} />
+          <span className="text-sm">Kembali</span>
+        </Button>
+      </div>
+
       <Card className="w-full border" key={postDetail.id}>
         <CardContent>
           <div className="flex flex-col">
@@ -169,14 +182,11 @@ export default function UserPostPetailPost({ auth, postDetail }: Props) {
           </div>
         </CardContent>
       </Card>
-      <AddCommentPost 
-      post_id={postDetail.id}
-      onSuccess={handleTriggerFetch}
-      />
-      <CommentPost 
-      post_id={postDetail.id}
-      triggerFetch={triggerFetch}
-      onSuccess={handleTriggerFetch}
+      <AddCommentPost post_id={postDetail.id} onSuccess={handleTriggerFetch} />
+      <CommentPost
+        post_id={postDetail.id}
+        triggerFetch={triggerFetch}
+        onSuccess={handleTriggerFetch}
       />
     </>
   );
