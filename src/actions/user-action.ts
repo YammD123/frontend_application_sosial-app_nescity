@@ -116,6 +116,12 @@ export const registerAction = async (_prev: ActionState,formData: FormData,) : P
             message:"email sudah terdaftar",
         }
     }
+    if(res.status === 400){
+        return {
+            success: false,
+            message: "username sudah terdaftar",
+        }
+    }
     return {
         success: true,
         message: "berhasil register"
