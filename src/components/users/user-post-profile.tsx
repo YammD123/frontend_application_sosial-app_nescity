@@ -14,6 +14,7 @@ import React from "react";
 import LikePost from "../posts/like-post";
 import EditPost from "../posts/edit-post";
 import DeletePost from "../posts/delete-post";
+import TotalCommentPost from "../posts/total-comment-post";
 
 interface Props {
   postProfile: {
@@ -177,7 +178,7 @@ export default function UserPostProfile({ postProfile, auth }: Props) {
                   user_id={auth.user.id}
                   post_id={post.id}
                 />
-                <p>as</p>
+                <TotalCommentPost post_id={post.id} />
                 <p>as</p>
               </div>
             </div>

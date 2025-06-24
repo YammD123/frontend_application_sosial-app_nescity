@@ -14,6 +14,7 @@ import EditPost from "../posts/edit-post";
 import { Card, CardContent } from "@/common/shadcn/card";
 import LikePost from "../posts/like-post";
 import AddCommentPost from "../posts/add-comment-post";
+import TotalCommentPost from "../posts/total-comment-post";
 interface Props {
   postDetail: {
     id: string;
@@ -157,7 +158,7 @@ export default function UserPostPetailPost({ auth, postDetail }: Props) {
                 user_id={auth.user.id}
                 post_id={postDetail.id}
               />
-              <p>as</p>
+              <TotalCommentPost post_id={postDetail.id} />
               <p>as</p>
             </div>
           </div>

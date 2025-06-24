@@ -11,6 +11,7 @@ import { Ellipsis, ListCollapse } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import LikePost from "../posts/like-post";
+import TotalCommentPost from "../posts/total-comment-post";
 
 interface Props {
   postProfile: {
@@ -157,7 +158,7 @@ export default function UserPostFollower({ postProfile, auth }: Props) {
                 user_id={auth.user.id}
                 post_id={post.id}
               />
-              <p>as</p>
+              <TotalCommentPost post_id={post.id} />
               <p>as</p>
             </div>
           </CardContent>
