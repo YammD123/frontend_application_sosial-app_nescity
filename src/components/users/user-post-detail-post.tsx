@@ -164,7 +164,9 @@ export default function UserPostPetailPost({ auth, postDetail }: Props) {
           </div>
         </CardContent>
       </Card>
-      <AddCommentPost />
+      <AddCommentPost 
+      post_id={postDetail.id}
+      />
     </>
   );
 }

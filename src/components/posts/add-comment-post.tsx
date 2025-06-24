@@ -1,10 +1,19 @@
 import { Button } from "@/common/shadcn/button";
 import { Separator } from "@/common/shadcn/separator";
+import { BASE_URL } from "@/lib/base-url";
+import { useRouter } from "next/navigation";
 import React, { useState, useRef, useEffect } from "react";
+import { toast } from "sonner";
 
-export default function AddCommentPost() {
+
+interface Props {
+  post_id: string;
+}
+
+export default function AddCommentPost({ post_id }: Props) {
   const [comment, setComment] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const textarea = textareaRef.current;
@@ -14,12 +23,25 @@ export default function AddCommentPost() {
     }
   }, [comment]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!comment.trim()) return;
-
-    console.log("Komentar:", comment);
-    setComment("");
+    const res = await fetch(`${BASE_URL}/comment`,{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        content: comment,
+        post_id: post_id,
+      }),
+    })
+    if(res.status === 201){
+      setComment("")
+      router.refresh();
+      toast.success("Komentar berhasil ditambahkan");
+    }
   };
 
   return (
