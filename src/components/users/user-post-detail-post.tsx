@@ -15,6 +15,7 @@ import { Card, CardContent } from "@/common/shadcn/card";
 import LikePost from "../posts/like-post";
 import AddCommentPost from "../posts/add-comment-post";
 import TotalCommentPost from "../posts/total-comment-post";
+import CommentPost from "../posts/comment-post";
 interface Props {
   postDetail: {
     id: string;
@@ -48,12 +49,16 @@ export default function UserPostPetailPost({ auth, postDetail }: Props) {
   const [expandedMap, setExpandedMap] = React.useState<{
     [postId: string]: boolean;
   }>({});
+  const [triggerFetch, setTriggerFetch] = React.useState<number>(0);
+
+  const handleTriggerFetch = () => {
+    setTriggerFetch((prev) => prev + 1);
+  };
   return (
     <>
       <Card className="w-full border" key={postDetail.id}>
         <CardContent>
           <div className="flex flex-col">
-            {/* Header */}
             <div className="flex items-center gap-2">
               <Image
                 src={postDetail.user.profile.avatar_image}
@@ -166,6 +171,12 @@ export default function UserPostPetailPost({ auth, postDetail }: Props) {
       </Card>
       <AddCommentPost 
       post_id={postDetail.id}
+      onSuccess={handleTriggerFetch}
+      />
+      <CommentPost 
+      post_id={postDetail.id}
+      triggerFetch={triggerFetch}
+      onSuccess={handleTriggerFetch}
       />
     </>
   );

@@ -8,12 +8,12 @@ import { toast } from "sonner";
 
 interface Props {
   post_id: string;
+  onSuccess: () => void; 
 }
 
-export default function AddCommentPost({ post_id }: Props) {
+export default function AddCommentPost({ post_id, onSuccess }: Props) {
   const [comment, setComment] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const router = useRouter();
 
   useEffect(() => {
     const textarea = textareaRef.current;
@@ -39,7 +39,7 @@ export default function AddCommentPost({ post_id }: Props) {
     })
     if(res.status === 201){
       setComment("")
-      router.refresh();
+      onSuccess(); 
       toast.success("Komentar berhasil ditambahkan");
     }
   };
