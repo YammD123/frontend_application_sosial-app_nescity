@@ -20,7 +20,6 @@ import {
 import { NavMain } from "@/components/navigations/nav-main";
 import { NavProjects } from "@/components/navigations/nav-projects";
 import { NavUser } from "@/components/navigations/nav-user";
-import { TeamSwitcher } from "@/components/team-switcher";
 import {
   Sidebar,
   SidebarContent,
@@ -28,26 +27,10 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/common/shadcn/sidebar";
+import { Notification } from "./nav-notification";
 
 // This is sample data.
 const data = {
-  teams: [
-    {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
-  ],
   navMain: [
     {
       title: "Beranda",
@@ -155,7 +138,7 @@ export function NavAppSidebar({
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <Notification  />
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
