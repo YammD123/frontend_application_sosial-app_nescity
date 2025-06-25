@@ -48,7 +48,7 @@ export default function UserAllExplore({userLoaderAll}: Props) {
                                 width={150}
                                 height={220}
                                 alt='avatar'
-                                className='w-full rounded'
+                                className='w-full h-48 rounded'
                             />
                             {/* <div className='flex items-start flex-col'>
                                 <h3 className='text-lg'>{user.profile.name}</h3>

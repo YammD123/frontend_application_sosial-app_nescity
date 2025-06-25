@@ -20,19 +20,11 @@ export default async function page({
   return (
     <div className="text-center gap-20 flex-col  flex items-center justify-center">
       <div className="w-full">
-        {!userLoaderFollower || !userLoaderFollower.profile ? (
-          <UserNotFoundId />
-        ) : (
           <UserBannerFollower profile={userLoaderFollower.profile} />
-        )}
       </div>
       <div className="flex gap-3 flex-col items-center sm:items-start sm:flex-row justify-between  w-full lg:w-3/4 2xl:w-8/12">
         <div className="w-8/12 ">
-          {!userLoaderFollower || !userLoaderFollower.profile ? (
-            ""
-          ) : (
             <UserInfoFollower profile={userLoaderFollower.profile} />
-          )}
         </div>
         <div className="w-full flex flex-col gap-2">
           {!postLoaderDetailUserId && !userLoaderFollower ? (

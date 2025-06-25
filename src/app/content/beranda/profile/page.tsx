@@ -13,7 +13,7 @@ export default async function page() {
   const auth = await userLoaderStatus();
 
   return (
-    <div className="text-center flex flex-col items-center gap-20 py-10">
+    <div className="text-center flex flex-col items-center gap-20 ">
       <div className="w-full">
         <UserBannerProfile profile={profileMe} />
       </div>

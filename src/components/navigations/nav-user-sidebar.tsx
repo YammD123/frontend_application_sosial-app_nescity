@@ -11,19 +11,14 @@ import {
   SidebarHeader,
 } from "@/common/shadcn/sidebar";
 import { Input } from "@/common/shadcn/input";
-import React, { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import React, { useState } from "react";
 import UserListSidebar from "../users/user-list-sidebar";
 import { followLoaderGetFollowers } from "@/loaders/follow-loader";
 
 export function UserSidebar() {
   const [search, setSearch] = useState("");
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const [followers, setFollowers] = useState<{
+  const [teman, setTeman] = useState<{
     total_followers: number;
-    total_data: number;
-    page: number;
     data: {
       id: string;
       follower: {
@@ -39,12 +34,12 @@ export function UserSidebar() {
   React.useEffect(() => {
     const getData = async () => {
       const newData = await followLoaderGetFollowers();
-      setFollowers(newData);
+      setTeman(newData);
     };
     getData();
   }, []);
   const filteredData =
-    followers?.data.filter((item) =>
+    teman?.data.filter((item) =>
       item.follower.profile.name
         ?.toLowerCase()
         .includes(search.trim().toLowerCase())
@@ -70,9 +65,9 @@ export function UserSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Follower List</SidebarGroupLabel>
+          <SidebarGroupLabel>Follower List ({teman?.total_followers})</SidebarGroupLabel>
           <SidebarGroupContent>
-            {followers && (
+            {teman && (
               <UserListSidebar
                 followers={{
                   data: filteredData,
