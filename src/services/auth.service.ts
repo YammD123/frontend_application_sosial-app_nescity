@@ -1,4 +1,4 @@
-import { ApiClient } from "@/lib/api-client";
+import { ApiClientMutation } from "@/lib/api-client";
 import { z } from "zod";
 
 export const registerSchema = z.object({
@@ -20,7 +20,7 @@ export type loginDto = z.infer<typeof loginSchema>;
 
 
 export const registerAction = (data: registerDto) =>{
-    return ApiClient<null>({
+    return ApiClientMutation<null>({
         url: "/user/register",
         method: "POST",
         data
@@ -28,7 +28,7 @@ export const registerAction = (data: registerDto) =>{
 }
 
 export const loginAction = (data: loginDto) =>{
-    return ApiClient<null>({
+    return ApiClientMutation<null>({
         url: "/user/login",
         method: "POST",
         data

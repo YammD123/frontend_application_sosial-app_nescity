@@ -10,16 +10,25 @@ const axiosInstance = axios.create({
   },
 });
 
-export const ApiClient = async <T>(config: AxiosRequestConfig): Promise<T | { error: any }> => {
+export const ApiClientMutation = async <T>(config: AxiosRequestConfig): Promise<T | { error: any }> => {
   try {
     const res = await axiosInstance(config);
-    return res.data;
+    return res.data
   } catch (err: any) {
     const message =
       err.response?.data?.message ||
       err.message ||
       "Terjadi kesalahan saat menghubungi server";
     return { error: message };
+  }
+  
+};
+export const ApiClientFetch = async <T>(config: AxiosRequestConfig): Promise<T> => {
+  try {
+    const res = await axiosInstance(config);
+    return res.data
+  } catch (err: any) {
+    throw err
   }
   
 };
