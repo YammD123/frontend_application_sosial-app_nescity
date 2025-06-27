@@ -18,7 +18,6 @@ import {
 } from "lucide-react";
 
 import { NavMain } from "@/components/navigations/nav-main";
-import { NavProjects } from "@/components/navigations/nav-projects";
 import { NavUser } from "@/components/navigations/nav-user";
 import {
   Sidebar,
@@ -66,29 +65,6 @@ const data = {
       ],
     },
     {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
       title: "Settings",
       url: "#",
       icon: Settings2,
@@ -112,23 +88,6 @@ const data = {
       ],
     },
   ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
-    },
-  ],
 };
 
 export function NavAppSidebar({
@@ -142,7 +101,6 @@ export function NavAppSidebar({
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={user} />

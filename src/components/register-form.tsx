@@ -18,7 +18,7 @@ import {
   registerAction,
   registerDto,
   registerSchema,
-} from "@/services/auth.service";
+} from "@/services/authService";
 import { toast } from "sonner";
 
 export function RegisterForm({

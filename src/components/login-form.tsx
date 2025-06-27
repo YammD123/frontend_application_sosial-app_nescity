@@ -8,7 +8,7 @@ import { Label } from "@/common/shadcn/label";
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { loginAction, loginDto, loginSchema } from "@/services/auth.service";
+import { loginAction, loginDto, loginSchema } from "@/services/authService";
 import { toast } from "sonner";
 
 export function LoginForm({
@@ -27,7 +27,7 @@ export function LoginForm({
       return;
     }
     try {
-      const res =await loginAction(login);
+      const res = await loginAction(login);
       if (res?.error) {
         toast.error(res.error);
         return;

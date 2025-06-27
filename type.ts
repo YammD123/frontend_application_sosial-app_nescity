@@ -1,7 +1,6 @@
 export type User = {
     id: string;
     email: string;
-    avatar: string;
     created_at: string;
     updated_at: string;
 
@@ -66,10 +65,18 @@ export type Like = {
     user:User
 };
 
+enum NotificationType {
+  follow_request = "follow_request",
+  follow_accept = "follow_accept",
+  follow_reject = "follow_reject",
+  post_like = "post_like",
+  post_comment = "post_comment",
+  post_comment_reply = "post_comment_reply"
+}
 
 export type Notification = {
     id:string;
-    type:string;
+    type:NotificationType;
     message:string;
     is_read:string;
     created_at:string;
