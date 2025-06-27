@@ -8,7 +8,6 @@ import UserHeaderProfile from "@/components/users/user-banner-follower";
 import UserInfoProfile from "@/components/users/user-info-follower";
 import UserPostProfile from "@/components/users/user-post-follower";
 import { postLoaderDetailByUserId, postLoaderMe } from "@/loaders/post-loader";
-import { profileLoaderMe } from "@/loaders/profile-loader";
 import { userLoaderFollowerById, userLoaderStatus } from "@/loaders/user-loader";
 import React from "react";
 import UserBannerFollower from "@/components/users/user-banner-follower";

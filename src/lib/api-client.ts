@@ -23,12 +23,7 @@ export const ApiClientMutation = async <T>(config: AxiosRequestConfig): Promise<
   }
   
 };
-export const ApiClientFetch = async <T>(config: AxiosRequestConfig): Promise<T> => {
-  try {
+export const ApiClient = async <T>(config: AxiosRequestConfig): Promise<T> => {
     const res = await axiosInstance(config);
     return res.data
-  } catch (err: any) {
-    throw err
-  }
-  
 };

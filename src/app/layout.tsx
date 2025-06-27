@@ -4,6 +4,7 @@ import "./globals.css";
 import { userLoaderStatus } from "@/loaders/user-loader";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "sonner";
+import { QueryProvider } from "./queryProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,7 +39,7 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <Toaster />
-          {children}
+          <QueryProvider>{children}</QueryProvider>
         </ThemeProvider>
       </body>
     </html>
